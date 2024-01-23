@@ -1,0 +1,51 @@
+Winter 2024 CSE115a Project SlimeLine
+
+Members:
+Bora Dursun
+Mohan Duvvuri
+Nicolas Hak
+Ronith Kalidindi
+Jack Kelly
+
+NOTE: if you did a git pull to get all the files, then just do
+1. Sudo apt install npm
+2. npm install react react-dom express
+3. npm install body-parser
+4. npm install axios
+5. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+6. nvm install 14
+7. nvm use 14 --> if err "nvm command not found", close terminal and open new one
+8. to run, cd into path: /115proj/my-react-app --> then run: node server.js
+
+Setup Instructions (starting from scratch):
+
+1. Sudo apt install npm
+    Install npm which is the javascript package installer
+2. npm install react react-dom express
+React for front-end, express view engine to render React objects
+https://www.npmjs.com/package/express-react-views
+3. npm install body-parser
+    https://www.npmjs.com/package/body-parser
+4. npm install axios
+    Needed to integrate react
+5. npm init -y
+    In the desired directory, run this to set up the environment
+6. npx create-react-app client
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    Used for “nvm install 14” and “nvm use 14”
+    Node 14 is needed for the npx command to run
+    If get error nvm command not found, then close terminal, open new one
+7. From step 6, there should now be a directory called client
+    Cd into that directory
+    Run: npm run build
+    Creates a build directory
+8. Inside your client directory, create a file called server.js
+    See heading Server.js
+9. Inside your src directory “.../client/src”
+    Edit the App.js file
+    See heading App.js
+10. Ensure your terminal path is now in the client directory
+    Now run node server.js
+    You can now go to localhost:5000 and you will see a button that you can push
+    It was made with React!
+
