@@ -16,8 +16,13 @@ NOTE: if you did a git pull to get all the files, then just do
 6. nvm install 14
 7. nvm use 14 --> if err "nvm command not found", close terminal and open new one
 8. to run, cd into path: /115proj/my-react-app --> then run: node server.js
+    also run "npm start"
 
 9. whenever adding a new feature to a page, do "npm run build" inside the ~/115proj/my-react-app directory to create the static files to be served
+10. for ease of running, ensure path is /115proj/my-react-app --> npm install concurrently
+    edit /115proj/my-react-app/package.json to have "start" in section "scripts" defined as:
+    "start": "concurrently \"node server.js\" \"react-scripts start\""
+11. if you did step 10, just do "npm start" to start both the backend and the frontend at the same time in only one terminal!
 
 Setup Instructions (starting from scratch):
 
@@ -50,4 +55,6 @@ https://www.npmjs.com/package/express-react-views
     Now run node server.js
     You can now go to localhost:5000 and you will see a button that you can push
     It was made with React!
+11. npm install react-router-dom
+    needed for file routing in App.js to serve: /, /foo paths, and many others
 
