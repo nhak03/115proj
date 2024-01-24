@@ -1,38 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
-
 
 const app = express();
 
-// Parse incoming JSON data
+// Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
-// Serve static assets from the React app's build directory
-app.use(express.static(path.join(__dirname, 'build')));
+// Handle POST requests to the '/foo' endpoint
+app.post('/foo', (req, res) => {
+  const { selection } = req.body;
 
-// Serve the React app's index.html at the root path
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  // Print the submitted data to the terminal
+  console.log('Submitted Selection:', selection);
+
+  // Optionally, you can send a response back to the client
+  res.status(200).json({ message: 'Selection received successfully' });
 });
 
-app.post('/terminal', (req, res) => {
-    const userInput = req.body.input;
-    console.log('User input from terminal:', userInput);
-    res.send('Input received!');
-});
-
-// // New route for handling GET requests to the root path
-// app.get('/', (req, res) => {
-//     res.send('Hello from the server!'); // Or any response you want
-// });
-
-app.get("/foo", (req, res) => {
-    res.send("You've requested the foo page.");
-});
-
-
+// Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
