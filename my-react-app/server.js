@@ -16,10 +16,16 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// New route for handling GET requests to the root path
-app.get('/', (req, res) => {
-    res.send('Hello from the server!'); // Or any response you want
+app.post('/terminal', (req, res) => {
+    const userInput = req.body.input;
+    console.log('User input from terminal:', userInput);
+    res.send('Input received!');
 });
+
+// // New route for handling GET requests to the root path
+// app.get('/', (req, res) => {
+//     res.send('Hello from the server!'); // Or any response you want
+// });
 
 app.get("/foo", (req, res) => {
     res.send("You've requested the foo page.");

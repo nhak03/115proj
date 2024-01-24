@@ -17,6 +17,8 @@ NOTE: if you did a git pull to get all the files, then just do
 7. nvm use 14 --> if err "nvm command not found", close terminal and open new one
 8. to run, cd into path: /115proj/my-react-app --> then run: node server.js
 
+9. whenever adding a new feature to a page, do "npm run build" inside the ~/115proj/my-react-app directory to create the static files to be served
+
 Setup Instructions (starting from scratch):
 
 1. Sudo apt install npm
@@ -36,7 +38,7 @@ https://www.npmjs.com/package/express-react-views
     Node 14 is needed for the npx command to run
     If get error nvm command not found, then close terminal, open new one
 7. From step 6, there should now be a directory called client
-    Cd into that directory
+    Cd into that directory ".../115proj/client"
     Run: npm run build
     Creates a build directory
 8. Inside your client directory, create a file called server.js

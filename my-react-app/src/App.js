@@ -25,6 +25,7 @@
 // export default App;
 
 import React, { useState } from 'react';
+import TerminalForm from './TerminalForm';
 
 function App() {
   const [showHello, setShowHello] = useState(false);
@@ -33,6 +34,8 @@ function App() {
     <div>
       <button onClick={() => setShowHello(true)}>Say Hello</button>
       {showHello && <p>Hello!</p>}
+
+      <TerminalForm/>
     </div>
   );
 }
