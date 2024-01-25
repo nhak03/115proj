@@ -1,0 +1,12 @@
+/* Post.css */
+
+.post {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.timestamp {
+    color: #888;
+    font-size: 12px;
+}

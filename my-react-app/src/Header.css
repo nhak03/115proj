@@ -1,0 +1,35 @@
+/* Header.css */
+
+header {
+    background-color: #00274d; /* UCSC Dark Blue */
+    color: #ffd100; /* UCSC Yellow */
+    padding: 10px;
+    text-align: center;
+    position: relative; /* Add this line */
+  }
+  
+  .logo {
+    max-width: 100px; /* Adjust the size as needed */
+    margin-right: 10px; /* Add margin if needed */
+    position: absolute; /* Add this line */
+    top: 10px; /* Adjust the top position as needed */
+    left: 10px; /* Adjust the left position as needed */
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  nav li {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #ffd100; /* UCSC Yellow */
+  }
+  
