@@ -27,6 +27,26 @@ app.post('/foo', (req, res) => {
   
 });
 
+app.post('/', (req, res) => {
+    const  userInput  = req.body;
+
+    console.log("Submitted text: ", userInput);
+    const number = parseInt(userInput.input, 10);
+
+    if(!isNaN(number)){
+        console.log("Valid num: ", number);
+
+        calc_res = number * 11;
+        res.status(200).json({ message: 'Number received successfully', calc_res });
+
+    }
+    else{
+        console.log("Not a valid num");
+        invalid = true;
+        res.status(400).json({message: 'That was not a number', invalid});
+    }
+});
+
 // Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

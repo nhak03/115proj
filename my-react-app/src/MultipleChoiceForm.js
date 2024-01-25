@@ -16,11 +16,10 @@ function MultipleChoiceForm() {
 
       if (response.ok) {
         console.log('Selection sent to server successfully!');
-        // Optionally, clear the selection or display a success message
         const responseData = await response.json();
         setSpecialMessage(responseData.specialMessage);
       } else {
-        console.error('Error sending selection to server:', response.statusText);
+        console.error('Error sending number to server:', response.statusText);
       }
     } catch (error) {
       console.error('Error making POST request:', error);
