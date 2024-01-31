@@ -46,17 +46,18 @@ function App() {
   
 
   return (
-    // <BrowserRouter>
-    //   <div>
-    //     <button onClick={() => setShowHello(true)}>Say Hello</button>
-    //     {showHello && <p>Hello!</p>}
+    <>
+    <BrowserRouter>
+      <div>
+        <button onClick={() => setShowHello(true)}>Say Hello</button>
+        {showHello && <p>Hello!</p>}
 
-    //     <Routes>
-    //       <Route path="/" element={<TerminalForm/>} />
-    //       <Route path="/foo" element={<MultipleChoiceForm/>} />
-    //     </Routes>
-    //   </div>
-    // </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TerminalForm/>} />
+          <Route path="/foo" element={<MultipleChoiceForm/>} />
+        </Routes>
+      </div>
+    </BrowserRouter>
 
     <div>
       <Header />
@@ -71,6 +72,7 @@ function App() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 
