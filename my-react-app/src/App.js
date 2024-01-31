@@ -7,7 +7,10 @@ import MultipleChoiceForm from './MultipleChoiceForm';
 
 import Post from './Post';
 import Header from './Header';
-
+import './App.css'
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import AuthDetails from './components/AuthDetails';
 
 function App() {
   const [showHello, setShowHello] = useState(false);
@@ -58,19 +61,29 @@ function App() {
     //   </div>
     // </BrowserRouter>
 
-    <div>
-      <Header />
-      <div>
-        {posts.map(post => (
-          <Post
-            key={post.id}
-            title={post.title}
-            timestamp={new Date(post.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
-            content={post.content}
-          />
-        ))}
+    // SHOULD BE UNCOMMENTED AFTER LOGIN STUFF COMPLETE
+
+      <div className="App">
+        
+        <div>
+          <Header />
+          <div>
+            {posts.map(post => (
+              <Post
+                key={post.id}
+                title={post.title}
+                timestamp={new Date(post.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                content={post.content}
+              />
+            ))}
+          </div>
+        </div>
+
+        <SignIn />
+        <SignUp />
+        <AuthDetails />
+        
       </div>
-    </div>
   );
 }
 
