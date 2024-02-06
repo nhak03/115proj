@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Post from './Post';
-import Header from './Header';
+import Post from './Post.js';
+import Header from './Header.js';
 
 function HomeForm(){
     const posts = [

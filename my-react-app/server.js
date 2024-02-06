@@ -1,64 +1,41 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+
+import bodyParser from 'body-parser';
+
+import { db } from './src/firebase.js';
+
+// const admin = require('firebase-admin');
+
+import { addDoc, collection } from "firebase/firestore"; 
+
 
 const app = express();
 
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
-// Handle POST requests to the '/foo' endpoint
-app.post('/foo', (req, res) => {
-    const { selection } = req.body;
-
-    // Print the submitted data to the terminal
-    console.log('Submitted Selection:', selection);
-
-    // Optionally, you can send a response back to the client
-    // res.status(200).json({ message: 'Selection received successfully' });
-
-    // Send the special message back to the client
-    let specialMessage = '';
-    if (selection === 'apples') {
-        specialMessage = 'APPLES! YIPPEE!';
-        res.status(200).json({ message: 'Selection received successfully', specialMessage });
-    } else {
-        specialMessage = 'No special message for this selection.';
-    }
-  
-});
-
-app.post('/', (req, res) => {
-    const  userInput  = req.body;
-
-    console.log("Submitted text: ", userInput);
-    const number = parseInt(userInput.input, 10);
-
-    if(!isNaN(number)){
-        console.log("Valid num: ", number);
-
-        calc_res = number * 11;
-        res.status(200).json({ message: 'Number received successfully', calc_res });
-
-    }
-    else{
-        console.log("Not a valid num");
-        invalid = true;
-        res.status(400).json({message: 'That was not a number', invalid});
-    }
-});
-
-app.post('/AddData', (req, res) => {
+app.post('/AddData', async (req, res) => {
     const { title, author, description, image } = req.body;
-    // print data to terminal
     console.log('Submitted data -->');
     console.log('Title:', title);
     console.log('Author:', author);
     console.log('Description:', description);
     console.log('Image:', image);
 
-    // upload to database
+    try {
+        const docRef = await addDoc(collection(db, "posts"), {
+            Title: title,
+            Description: description,
+            Author: author,
+            Image: image
+          });
 
-    res.status(200).json({ success: true });
+        console.log("Document written with ID: ", docRef.id);
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.error("Error adding document: ", error);
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
 // Start the server

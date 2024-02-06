@@ -1,18 +1,16 @@
 
 import React, { useState } from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom'; // npm install react-router-dom
-import TerminalForm from './TerminalForm';
-import MultipleChoiceForm from './MultipleChoiceForm';
-import FollowingForm from './Following';
-import HomeForm from './Home';
-import Post from './Post';
-import Header from './Header';
+import FollowingForm from './Following.js';
+import HomeForm from './Home.js';
+import Post from './Post.js';
+import Header from './Header.js';
 import './App.css'
-import SignIn from './components/auth/SignIn';
-import SignUp from './components/auth/SignUp';
-import AuthDetails from './components/AuthDetails';
+import SignIn from './components/auth/SignIn.jsx';
+import SignUp from './components/auth/SignUp.jsx';
+import AuthDetails from './components/AuthDetails.jsx';
 
-import AddData from './AddData';
+import AddData from './AddData.js';
 
 
 function App() {
