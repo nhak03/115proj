@@ -5,13 +5,14 @@ import TerminalForm from './TerminalForm';
 import MultipleChoiceForm from './MultipleChoiceForm';
 import FollowingForm from './Following';
 import HomeForm from './Home';
-
 import Post from './Post';
 import Header from './Header';
 import './App.css'
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import AuthDetails from './components/AuthDetails';
+
+import AddData from './AddData';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeForm/>} />
             <Route path="/following" element={<FollowingForm/>} />
+            <Route path='/AddData' element={<AddData/>}/>
           </Routes>
         </div>
         </BrowserRouter>

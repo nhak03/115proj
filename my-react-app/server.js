@@ -47,6 +47,20 @@ app.post('/', (req, res) => {
     }
 });
 
+app.post('/AddData', (req, res) => {
+    const { title, author, description, image } = req.body;
+    // print data to terminal
+    console.log('Submitted data -->');
+    console.log('Title:', title);
+    console.log('Author:', author);
+    console.log('Description:', description);
+    console.log('Image:', image);
+
+    // upload to database
+
+    res.status(200).json({ success: true });
+});
+
 // Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
