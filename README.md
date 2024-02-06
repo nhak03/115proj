@@ -23,6 +23,7 @@ NOTE: if you did a git pull to get all the files, then just do
     edit /115proj/my-react-app/package.json to have "start" in section "scripts" defined as:
     "start": "concurrently \"node server.js\" \"react-scripts start\""
 11. if you did step 10, just do "npm start" to start both the backend and the frontend at the same time in only one terminal!
+12. npm install firebase
 
 Setup Instructions (starting from scratch):
 
