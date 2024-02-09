@@ -38,7 +38,6 @@ function App() {
             ))}
           </div>
         </div> */}
-
         <BrowserRouter>
         <div>
           <Routes>
