@@ -35,13 +35,29 @@ const CreatePost = () =>
         //
         // TODO: Send stuff to backend
         //
+        try {
+          const backend_response = await fetch('/makePost', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ organizationName, postTitle, postDescription }),
+          });
+      
+          if (backend_response.ok) {
+              console.log('User input sent to server successfully!');
+              const backendStatus = await backend_response.json(); // Parse response JSON
+              if (backendStatus.success) {
+                setSubmitted(true);
+              }
+            }
+        } catch (error) {
+          console.error('Error making POST request:', error);
+        }
     
         // Clear the form
         setOrganizationName('');
         setPostTitle('');
         setPostDescription('');
         setErrorMessage('');
-        setSubmitted(true);
     };
 
     return (

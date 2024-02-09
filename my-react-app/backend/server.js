@@ -14,23 +14,17 @@ const app = express();
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
-app.post('/AddData', async (req, res) => {
-    const { title, author, description, image } = req.body;
-    console.log('Submitted data -->');
-    console.log('Title:', title);
-    console.log('Author:', author);
-    console.log('Description:', description);
-    console.log('Image:', image);
+app.post('/makePost', async (req, res) => {
+    const { organizationName, postTitle, postDescription } = req.body;
 
     try {
         const docRef = await addDoc(collection(db, "posts"), {
-            Title: title,
-            Description: description,
-            Author: author,
-            Image: image
+            Title: postTitle,
+            Description: postDescription,
+            Author: organizationName
           });
 
-        console.log("Document written with ID: ", docRef.id);
+        // console.log("Document written with ID: ", docRef.id);
         res.status(200).json({ success: true });
     } catch (error) {
         console.error("Error adding document: ", error);

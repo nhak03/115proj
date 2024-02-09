@@ -11,7 +11,6 @@ import SignUp from './components/auth/SignUp.jsx';
 import AuthDetails from './components/auth/AuthDetails.jsx';
 import Discover from './pages/Discover.js';
 
-import AddData from './AddData.js';
 import WhatsNew from './pages/WhatsNew.js';
 
 
@@ -43,7 +42,6 @@ function App() {
           <Routes>
             <Route path="/" element={<WhatsNew/>} />
             <Route path="/following" element={<Following/>} />
-            <Route path='/AddData' element={<AddData/>}/>
             <Route path='/discover' element={<Discover/>}/>
           </Routes>
         </div>
