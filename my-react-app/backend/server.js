@@ -2,7 +2,7 @@ import express from 'express';
 
 import bodyParser from 'body-parser';
 
-import { db } from './src/firebase.js';
+import { db } from '../src/firebase.js';
 
 // const admin = require('firebase-admin');
 

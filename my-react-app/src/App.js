@@ -1,20 +1,22 @@
 
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom'; // npm install react-router-dom
-import FollowingForm from './Following.js';
-import HomeForm from './Home.js';
-import Post from './Post.js';
-import Header from './Header.js';
+import Following from './pages/Following.js';
+// import HomeForm from './Home.js';
+// import Post from './components/Post/Post.js';
+// import Header from './components/Header/Header.js';
 import './App.css'
 import SignIn from './components/auth/SignIn.jsx';
 import SignUp from './components/auth/SignUp.jsx';
-import AuthDetails from './components/AuthDetails.jsx';
+import AuthDetails from './components/auth/AuthDetails.jsx';
+import Discover from './pages/Discover.js';
 
 import AddData from './AddData.js';
+import WhatsNew from './pages/WhatsNew.js';
 
 
 function App() {
-  const [showHello, setShowHello] = useState(false);
+  // const [showHello, setShowHello] = useState(false);
   
 
   return (
@@ -40,9 +42,10 @@ function App() {
         <BrowserRouter>
         <div>
           <Routes>
-            <Route path="/" element={<HomeForm/>} />
-            <Route path="/following" element={<FollowingForm/>} />
+            <Route path="/" element={<WhatsNew/>} />
+            <Route path="/following" element={<Following/>} />
             <Route path='/AddData' element={<AddData/>}/>
+            <Route path='/discover' element={<Discover/>}/>
           </Routes>
         </div>
         </BrowserRouter>

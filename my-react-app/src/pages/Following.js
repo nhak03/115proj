@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import Post from './Post.js';
-import Header from './Header.js';
+// import React, { useState } from 'react';
+import Post from '../components/Post/Post.js';
+import Header from '../components/Header/Header.js';
 
-function HomeForm(){
+function Following(){
     const posts = [
         {
           id: 1,
-          club: 'Astronomy Club',
-          title: 'Stargazing Night',
-          content: "Join us for a stargazing night on the Science Hill. We'll have telescopes set up to observe the wonders of the night sky. Don't miss this celestial experience!",
-          timestamp: '2024-02-01T18:00:00.000Z'
+          club: 'Administration',
+          title: 'Information',
+          content: "Serving you the static /following page",
+          timestamp: '2021-02-01T18:00:00.000Z'
         },
         {
           id: 2,
@@ -34,24 +34,23 @@ function HomeForm(){
         },
         // Add more posts as needed
       ];
-
     return(
-      <div className="Home">
-      <div>
-      <Header />
-          <div>
-          {posts.map(post => (
-          <Post
-          key={post.id}
-          title={post.title}
-          timestamp={new Date(post.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
-          content={post.content}
-          />
-          ))}
-          </div>
-      </div>
-      </div>
-    );        
+        <div className="Following">
+            <div>
+                <Header />
+                <div>
+                    {posts.map(post => (
+                    <Post
+                        key={post.id}
+                        title={post.title}
+                        timestamp={new Date(post.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                        content={post.content}
+                    />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default HomeForm;
+export default Following;
