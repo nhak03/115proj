@@ -38,6 +38,22 @@ app.post('/AddData', async (req, res) => {
     }
 });
 
+app.post('/createClub', async(req, res) => {
+    const { clubName, clubType } = req.body;
+    
+    try{
+      const docRef = await addDoc(collection(db, "clubs"), {
+        name: clubName,
+        type: clubType
+      });
+      res.status(200).json({ success: true });
+    }
+    catch(error){
+      console.error("Error adding document: ", error);
+      res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
