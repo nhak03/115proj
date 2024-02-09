@@ -16,6 +16,12 @@ const Header = () => {
           <li><a href="/discover">Discover</a></li>
         </ul>
       </nav>
+
+      {/* Added this div to display the create post button on all pages */}
+      <div>
+        <createPost/>
+      </div>
+      
     </header>
   );
 }
