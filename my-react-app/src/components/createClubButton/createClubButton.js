@@ -27,6 +27,7 @@ const CreateClubButton = () => {
         // });
 
         try {
+          // send the filled form to the backend
           const backend_response = await fetch('/createClub', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -14,6 +14,11 @@ const app = express();
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
+app.post('/what_new', async (req, res) => {
+    console.log("Someone requested the / path");
+    res.status(200).json({ success: true });
+});
+
 app.post('/makePost', async (req, res) => {
     const { organizationName, postTitle, postDescription } = req.body;
 
