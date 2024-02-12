@@ -4,19 +4,28 @@ import bodyParser from 'body-parser';
 
 import { db } from '../src/firebase.js';
 
+
+
 // const admin = require('firebase-admin');
 
-import { addDoc, collection } from "firebase/firestore"; 
-
+import { addDoc, collection, getDocs } from "firebase/firestore"; 
+import { firestore } from '../src/firebase.js'; // Correct way to import
 
 const app = express();
 
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
-app.post('/what_new', async (req, res) => {
+app.post('/whats_new', async (req, res) => {
     console.log("Someone requested the / path");
-    res.status(200).json({ success: true });
+    const postCollection = collection(firestore, 'posts');
+    const querySnapshot = await getDocs(postCollection);
+    let from_DB_Posts = [];
+    querySnapshot.forEach((doc) => {
+        from_DB_Posts.push({ id: doc.id, ...doc.data() });
+    });
+
+    res.status(200).json({ success: true, posts: from_DB_Posts });
 });
 
 app.post('/makePost', async (req, res) => {

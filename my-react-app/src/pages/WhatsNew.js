@@ -10,15 +10,7 @@ function WhatsNew() {
   useEffect(() => {
     const fetchPosts = async () => {
         try {
-            // const postCollection = collection(firestore, 'posts');
-            // const querySnapshot = await getDocs(postCollection);
-            // const fetchedPosts = [];
-            // querySnapshot.forEach((doc) => {
-            //     fetchedPosts.push({ id: doc.id, ...doc.data() });
-            // });
-            // setPosts(fetchedPosts);
-            
-            const backend_response = await fetch('/what_new', {
+            const backend_response = await fetch('/whats_new', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' }
               // body: JSON.stringify({ clubName, clubType }),
@@ -28,34 +20,37 @@ function WhatsNew() {
             }
             const backendStatus = await backend_response.json();
             if(backendStatus.success){
-              console.log("Server responded with a success!");
+              // console.log("Server responded with a success!");
+              // success respond means that we have the array
+              setPosts(backendStatus.posts);
+              console.log("displaying posts...");
             }
-
         } catch (error) {
             console.error('Error fetching posts: ', error);
         }
     };
-    // Only fetch posts if running on the client side
-    if (typeof window !== 'undefined') {
-      fetchPosts();
-    }
-    // fetchPosts();
+    
+    fetchPosts();
 }, []);
 
   return (
     <div className="Home">
-      <Header />
-      <div>
-        {posts.map(post => (
+    <Header />
+    <div>
+      {posts ? (
+        posts.map(post => (
           <div key={post.id}>
             <h3>{post.Title}</h3>
             <p>Author: {post.Author}</p>
             <p>{post.Description}</p>
             {post.Image && <img src={post.Image} alt="Post" />}
           </div>
-        ))}
-      </div>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
+  </div>
   );
 }
 
