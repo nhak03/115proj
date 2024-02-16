@@ -8,7 +8,7 @@ function WhatsNew() {
   useEffect(() => {
     const fetchPosts = async () => {
         try {
-            const backend_response = await fetch('/whats_new', {
+            const backend_response = await fetch('/get_posts', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' }
               // body: JSON.stringify({ clubName, clubType }),

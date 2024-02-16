@@ -8,7 +8,7 @@ const SearchBar = () => {
   useEffect(() => {
     const fetchClubs = async () => {
         try {
-            const backend_response = await fetch('/clubs', {
+            const backend_response = await fetch('/get_clubs', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' }
               // body: JSON.stringify({ clubName, clubType }),

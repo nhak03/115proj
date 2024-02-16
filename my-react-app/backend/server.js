@@ -16,7 +16,7 @@ const app = express();
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
-app.post('/whats_new', async (req, res) => {
+app.post('/get_posts', async (req, res) => {
     console.log("Someone requested the / path");
     const postCollection = collection(firestore, 'posts');
     const querySnapshot = await getDocs(postCollection);
@@ -28,8 +28,8 @@ app.post('/whats_new', async (req, res) => {
     res.status(200).json({ success: true, posts: from_DB_Posts });
 });
 
-app.post('/clubs', async (req, res) => {
-  console.log("Someone requested the / path");
+app.post('/get_clubs', async (req, res) => {
+  console.log("Someone requested the /get_clubs path");
   const postCollection = collection(firestore, 'clubs');
   const querySnapshot = await getDocs(postCollection);
   let from_DB_Clubs = [];
