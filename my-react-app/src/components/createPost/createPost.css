@@ -1,0 +1,28 @@
+/* Styling for Create Post button */
+/* courtesy of Google Gemini */
+
+
+/* Target the button by its ID */
+#CreatePostButton {
+    /* Use absolute positioning */
+    position: absolute;
+  
+    /* Set top and right spacing from the edges */
+    top: 20px;
+    right: 20px;
+  
+    /* Optional: Set some default button styles */
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+  
+    /* Ensure responsiveness by wrapping in a container */
+    /* (Optional if your layout already has positioning) */
+    .button-container {
+      position: relative;
+    }
+  }
+  

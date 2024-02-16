@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from '../../firebase.js';
 
 const SearchBar = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -10,20 +8,28 @@ const SearchBar = () => {
   useEffect(() => {
     const fetchClubs = async () => {
         try {
-            const clubCollection = collection(firestore, 'clubs');
-            const querySnapshot = await getDocs(clubCollection);
-            const fetchedClubs = [];
-            querySnapshot.forEach((doc) => {
-                fetchedClubs.push({ id: doc.id, ...doc.data() });
+            const backend_response = await fetch('/clubs', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' }
+              // body: JSON.stringify({ clubName, clubType }),
             });
-            setClubs(fetchedClubs);
+            if(backend_response.ok){
+              console.log("Server recieved our request to query the database.");
+            }
+            const backendStatus = await backend_response.json();
+            if(backendStatus.success){
+              // console.log("Server responded with a success!");
+              // success respond means that we have the array
+              setClubs(backendStatus.posts);
+              console.log("displaying clubs...");
+            }
         } catch (error) {
             console.error('Error fetching clubs: ', error);
         }
     };
-
+    
     fetchClubs();
-}, []);
+  }, []);
   
   const handleChange = (e) => {
     e.preventDefault();
