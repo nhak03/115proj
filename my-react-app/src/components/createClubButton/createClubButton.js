@@ -3,6 +3,8 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 // import { db } from '../../firebase.js';
 // import { collection, addDoc } from "firebase/firestore"; 
+import useAuthState from '../auth/useAuthState.js';
+import { auth } from '../../firebase.js';
 
 
 const CreateClubButton = () => {
@@ -11,9 +13,23 @@ const CreateClubButton = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
+    const authUser = useAuthState();
+    // if(authUser){
+    //   let msg = "User is logged in as " + authUser.email;
+    //   console.log(msg);
+    // }
+    // else{
+    //   console.log("User is not logged in");
+    // }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(!authUser){
+            setErrorMessage('You must be logged in to make a new club!');
+            return;
+        }
     
         // Validation: Ensure both fields are filled out
         if (!clubName || !clubType) {
