@@ -2,7 +2,7 @@ import express from 'express';
 
 import bodyParser from 'body-parser';
 
-import { db } from '../src/firebase.js';
+import { auth, db } from '../src/firebase.js';
 
 
 
@@ -59,12 +59,15 @@ app.post('/makePost', async (req, res) => {
 });
 
 app.post('/createClub', async(req, res) => {
-    const { clubName, clubType } = req.body;
+    const { clubName, clubType, authorEmail } = req.body;
     
     try{
+      let msg = "Author email is: " + authorEmail;
+      console.log(msg);
       const docRef = await addDoc(collection(db, "clubs"), {
         name: clubName,
-        type: clubType
+        type: clubType,
+        author: authorEmail
       });
       res.status(200).json({ success: true });
     }

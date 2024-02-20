@@ -4,24 +4,17 @@ import 'reactjs-popup/dist/index.css';
 // import { db } from '../../firebase.js';
 // import { collection, addDoc } from "firebase/firestore"; 
 import useAuthState from '../auth/useAuthState.js';
-import { auth } from '../../firebase.js';
+// import { auth } from '../../firebase.js';
 
 
 const CreateClubButton = () => {
     const [clubName, setClubName] = useState('');
     const [clubType, setClubType] = useState('');
+    let [authorEmail, setClubEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
     const authUser = useAuthState();
-    // if(authUser){
-    //   let msg = "User is logged in as " + authUser.email;
-    //   console.log(msg);
-    // }
-    // else{
-    //   console.log("User is not logged in");
-    // }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,6 +22,11 @@ const CreateClubButton = () => {
         if(!authUser){
             setErrorMessage('You must be logged in to make a new club!');
             return;
+        }
+        else{
+          let msg = "User is making a club as " + authUser.email;
+          console.log(msg);
+          authorEmail = authUser.email;
         }
 
         // now that we can detect the userAuth fields, we can see if their email
@@ -43,18 +41,14 @@ const CreateClubButton = () => {
             setErrorMessage('Please fill out all fields.');
             return;
         };
-
-        // await addDoc(collection(db, "clubs"), {
-        //     name: clubName,
-        //     type: clubType
-        // });
-
+      
         try {
           // send the filled form to the backend
+          
           const backend_response = await fetch('/createClub', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ clubName, clubType }),
+            body: JSON.stringify({ clubName, clubType, authorEmail}),
           });
       
           if (backend_response.ok) {
