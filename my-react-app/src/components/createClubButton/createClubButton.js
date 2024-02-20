@@ -30,6 +30,13 @@ const CreateClubButton = () => {
             setErrorMessage('You must be logged in to make a new club!');
             return;
         }
+
+        // now that we can detect the userAuth fields, we can see if their email
+        // is already in the database to see if they already have a club
+        // throw error if they do
+        /*
+        TODO
+        */
     
         // Validation: Ensure both fields are filled out
         if (!clubName || !clubType) {
