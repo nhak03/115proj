@@ -24,6 +24,7 @@ NOTE: if you did a git pull to get all the files, then just do
     "start": "concurrently \"node server.js\" \"react-scripts start\""
 11. if you did step 10, just do "npm start" to start both the backend and the frontend at the same time in only one terminal!
 12. npm install firebase
+13. npm install react-firebase-hooks
 
 Setup Instructions (starting from scratch):
 

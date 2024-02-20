@@ -7,6 +7,7 @@ import SignIn from './components/auth/SignIn.jsx';
 import SignUp from './components/auth/SignUp.jsx';
 import AuthDetails from './components/auth/AuthDetails.jsx';
 import Discover from './pages/Discover.js';
+import Profile from './pages/Profile.js'
 
 import WhatsNew from './pages/WhatsNew.js';
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<WhatsNew/>} />
             <Route path="/following" element={<Following/>} />
             <Route path='/discover' element={<Discover/>}/>
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
         </BrowserRouter>
