@@ -50,6 +50,10 @@ const CreateClubButton = () => {
               const backendStatus = await backend_response.json(); // Parse response JSON
               if (backendStatus.success) {
                 setSubmitted(true);
+                // Clear the form
+                setClubName('');
+                setClubType('');
+                setErrorMessage('');
               }
             }
           
@@ -63,12 +67,6 @@ const CreateClubButton = () => {
         } catch (error) {
           console.error('Error making POST request:', error);
         }
-        
-    
-        // Clear the form
-        setClubName('');
-        setClubType('');
-        setErrorMessage('');
         
     };
 
@@ -88,7 +86,8 @@ const CreateClubButton = () => {
                   {submitted ? (
                     <div>
                       <h2>Success!</h2>
-                      <p>You have created your club</p>
+                      <p>You have created your club,</p>
+                      <p>You may close this popup.</p>
                     </div>
                   ) : (
                     <div>

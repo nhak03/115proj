@@ -64,7 +64,12 @@ app.post('/createClub', async(req, res) => {
       // console.log(msg);
 
       // see if they already have a club
-      const q = query(collection(db, "clubs"), where("author", "==", authorEmail));
+      let q = query(collection(db, "clubs"), where("author", "==", authorEmail));
+
+      // see if the club exists already
+      /*
+      TODO
+      */
       // const querySnapshot = await get(q);
       if (q.empty) {
         // if they don't have a club
