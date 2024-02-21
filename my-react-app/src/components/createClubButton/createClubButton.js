@@ -60,13 +60,16 @@ const CreateClubButton = () => {
           if(backend_response.status === 403){
               const backendStatus = await backend_response.json();
               let err_msg = backendStatus.err_msg;
-              // for some reason, the error msg is not displaying
               setErrorMessage(err_msg);
+              setClubName('');
+              setClubType('');
               console.log(err_msg);
           }
         } catch (error) {
           console.error('Error making POST request:', error);
         }
+        setClubName('');
+        setClubType('');
         
     };
 

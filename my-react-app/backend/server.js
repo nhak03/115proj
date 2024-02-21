@@ -60,31 +60,42 @@ app.post('/createClub', async(req, res) => {
     const { clubName, clubType, authorEmail } = req.body;
     
     try{
-      // let msg = "Author email is: " + authorEmail;
-      // console.log(msg);
+      let msg = "Author email is: " + authorEmail;
+      console.log(msg);
 
       // see if they already have a club
       let q = query(collection(db, "clubs"), where("author", "==", authorEmail));
 
       // see if the club exists already
-      /*
-      TODO
-      */
-      // const querySnapshot = await get(q);
-      if (q.empty) {
+      let existingName_query = query(collection(db, "clubs"), where("name", "==", clubName));
+
+      const qSnapshot = await getDocs(q);
+      const existingName = await getDocs(existingName_query);
+
+
+      if(existingName.empty === false){
+        // if it is empty, then club name is unique
+        console.log("createClub err: duplicate club name");
+        res.status(403).json({
+          success: false,
+          err_msg: "That club account name already exists!"
+        });
+      }else if (qSnapshot.empty) {
         // if they don't have a club
         // allow the user to make one
+        console.log("createClub: successful club creation")
         const docRef = await addDoc(collection(db, "clubs"), {
           name: clubName,
           type: clubType,
           author: authorEmail
         });
         res.status(200).json({ success: true, message: "Club created successfully!" });
-      } else {
+      } else if(!qSnapshot.empty){
         // they already have a club associated with the email
+        console.log("createClub err: already a club account");
         res.status(403).json({
           success: false,
-          err_msg: "You already have a club account. Please contact support or create a new account with a different email.",
+          err_msg: "You already have a club account. Please contact support or create a new account with a different email."
         });
       }
       // end of "see if they already have a club"
