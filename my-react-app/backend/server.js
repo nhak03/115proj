@@ -4,12 +4,10 @@ import bodyParser from 'body-parser';
 
 import { auth, db } from '../src/firebase.js';
 
-
-
 // const admin = require('firebase-admin');
 
-import { addDoc, collection, getDocs } from "firebase/firestore"; 
-import { firestore } from '../src/firebase.js'; // Correct way to import
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore"; 
+import { firestore } from '../src/firebase.js'; // Correct way to import 
 
 const app = express();
 
@@ -62,14 +60,29 @@ app.post('/createClub', async(req, res) => {
     const { clubName, clubType, authorEmail } = req.body;
     
     try{
-      let msg = "Author email is: " + authorEmail;
-      console.log(msg);
-      const docRef = await addDoc(collection(db, "clubs"), {
-        name: clubName,
-        type: clubType,
-        author: authorEmail
-      });
-      res.status(200).json({ success: true });
+      // let msg = "Author email is: " + authorEmail;
+      // console.log(msg);
+
+      // see if they already have a club
+      const q = query(collection(db, "clubs"), where("author", "==", authorEmail));
+      // const querySnapshot = await get(q);
+      if (q.empty) {
+        // if they don't have a club
+        // allow the user to make one
+        const docRef = await addDoc(collection(db, "clubs"), {
+          name: clubName,
+          type: clubType,
+          author: authorEmail
+        });
+        res.status(200).json({ success: true, message: "Club created successfully!" });
+      } else {
+        // they already have a club associated with the email
+        res.status(403).json({
+          success: false,
+          err_msg: "You already have a club account. Please contact support or create a new account with a different email.",
+        });
+      }
+      // end of "see if they already have a club"
     }
     catch(error){
       console.error("Error adding document: ", error);

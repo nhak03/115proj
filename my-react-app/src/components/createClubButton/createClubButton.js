@@ -29,12 +29,6 @@ const CreateClubButton = () => {
           authorEmail = authUser.email;
         }
 
-        // now that we can detect the userAuth fields, we can see if their email
-        // is already in the database to see if they already have a club
-        // throw error if they do
-        /*
-        TODO
-        */
     
         // Validation: Ensure both fields are filled out
         if (!clubName || !clubType) {
@@ -58,6 +52,14 @@ const CreateClubButton = () => {
                 setSubmitted(true);
               }
             }
+          
+          if(backend_response.status === 403){
+              const backendStatus = await backend_response.json();
+              let err_msg = backendStatus.err_msg;
+              // for some reason, the error msg is not displaying
+              setErrorMessage(err_msg);
+              console.log(err_msg);
+          }
         } catch (error) {
           console.error('Error making POST request:', error);
         }
@@ -127,4 +129,4 @@ const CreateClubButton = () => {
       );      
 };
 
-export default CreateClubButton
+export default CreateClubButton;
