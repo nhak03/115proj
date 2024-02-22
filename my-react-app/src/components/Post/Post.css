@@ -1,12 +1,42 @@
 /* Post.css */
 
-.post {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
+.highlight-on-hover {
+    color: white; /* Default text color */
+    text-decoration: none; /* Remove default underline */
+    transition: color 0.3s ease; /* Smooth transition for color change */
 }
 
-.timestamp {
-    color: #888;
-    font-size: 12px;
+.highlight-on-hover:hover {
+    color: #fdc700; /* Text color when hovered */
+  }
+
+.post {
+    background-color: rgba(215, 214, 213, 0.579);
+    border-radius: 25px;
+    border: 5px solid #fdc700;
+    padding: 20px;
+    margin: 40px 120px;
 }
+
+.author {
+    background-color: #003c6c;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.title {
+    font-family: 'Roboto', sans-serif;
+    color: #003c6c;
+    font-size: 50px;
+    padding: 20px;
+}
+
+.description {
+    color: grey;
+    font-size: 25px;
+    padding: 20px;
+}
+
+
