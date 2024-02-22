@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import useAuthState from './useAuthState.js';
 import { auth } from '../../firebase.js';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 
 const AuthDetails = () => {
-    const [authUser, setAuthUser] = useState(null);
+    const authUser = useAuthState();
 
-    useEffect(() => {
-        const listen = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setAuthUser(user)
-            } else {
-                setAuthUser(null)
-            }
-        })
+    // useEffect(() => {
+    //     const listen = onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             setAuthUser(user)
+    //         } else {
+    //             setAuthUser(null)
+    //         }
+    //     })
 
-        return () => {
-            listen();
-        }
-    }, []);
+    //     return () => {
+    //         listen();
+    //     }
+    // }, []);
 
     const usersignOut = () => {
         signOut(auth).then(() => {
