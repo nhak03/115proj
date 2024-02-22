@@ -8,11 +8,7 @@ import SignUp from './components/auth/SignUp.jsx';
 import AuthDetails from './components/auth/AuthDetails.jsx';
 import Discover from './pages/Discover.js';
 import Profile from './pages/Profile.js'
-<<<<<<< HEAD
 import ClubPage from './pages/ClubPage.js'
-=======
-
->>>>>>> origin/main
 import WhatsNew from './pages/WhatsNew.js';
 
 
@@ -28,10 +24,7 @@ function App() {
             <Route path="/following" element={<Following/>} />
             <Route path='/discover' element={<Discover/>}/>
             <Route path="/profile" element={<Profile />} />
-<<<<<<< HEAD
             <Route path="/club_page/:clubName" element={<ClubPage />} />
-=======
->>>>>>> origin/main
           </Routes>
         </div>
         </BrowserRouter>
