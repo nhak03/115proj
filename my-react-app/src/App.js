@@ -9,18 +9,13 @@ import AuthDetails from './components/auth/AuthDetails.jsx';
 import Discover from './pages/Discover.js';
 import Profile from './pages/Profile.js'
 import ClubPage from './pages/ClubPage.js'
-
 import WhatsNew from './pages/WhatsNew.js';
 
 
 function App() {
-  // const [showHello, setShowHello] = useState(false);
   
 
   return (
-
-    // SHOULD BE UNCOMMENTED AFTER LOGIN STUFF COMPLETE
-
       <div className="App">
         <BrowserRouter>
         <div>
