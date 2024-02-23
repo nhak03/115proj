@@ -1,0 +1,27 @@
+/* Post.css */
+
+#clubTable tbody tr:hover td {
+    color: #fdc700; /* Change to the desired text color */
+}
+
+#clubTable {
+    background-color: rgba(215, 214, 213, 0.579);
+    border-radius: 25px;
+    border: 5px solid #fdc700;
+    padding: 20px;
+    margin: auto;
+}
+
+th {
+    color: black;
+    font-size: 48px;
+}
+
+td {
+    color: #236498;
+    font-size: 32px;
+}
+
+
+
+

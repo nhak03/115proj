@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './SearchBar.css'
 
 const SearchBar = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -52,17 +53,21 @@ const SearchBar = () => {
         />
       </div>
       <div>
-        <table>
-          <tr>
-            <th>Club Name</th>
-            <th>Club Type</th>
-          </tr>
-          {filteredClubs.map((club) => (
-            <tr key={club.name}>
-              <td>{club.name}</td>
-              <td>{club.type}</td>
+        <table id="clubTable">
+          <thead>
+            <tr>
+              <th>Club Name</th>
+              <th>Club Type</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {filteredClubs.map((club) => (
+              <tr key={club.name} onclick={`window.location.href = '/club_page/?param1=${club.name}';`} >
+                <td>{club.name}</td>
+                <td>{club.type}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
