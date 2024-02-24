@@ -6,9 +6,17 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 
 class userObject {
-    constructor(authUser, isClub) {
+    constructor(authUser, isClub, clubName) {
         this.authUser = authUser;
         this.clubStatus = isClub;
+        this.clubName = clubName;
+    }
+}
+
+class clubStatus{
+    constructor(isClub, clubName){
+        this.isClub = isClub; // bool
+        this.clubName = clubName // string
     }
 }
 
@@ -22,11 +30,16 @@ const getClubStatus = async (user_email) => {
     if(qSnapshot.empty){
         // if it is empty
         // they do not have a club
-        return false;
+        let clubInfo = new clubStatus(false, '');
+        return clubInfo;
     }
     else{
         // else they are a club owner
-        return true;
+        const clubName = qSnapshot.docs[0].data().name; // has to be the variable name in the firestore collection
+        let msg = 'associated clubname: ' + clubName;
+        console.log(msg);
+        let clubInfo = new clubStatus(true, clubName);
+        return clubInfo;
     }
 }
 
@@ -42,7 +55,7 @@ const useAuthState = () => {
             // set true or false depending on if they are a club author
             if(user){
                 const is_club_acc = await getClubStatus(user.email);
-                const currentUser = new userObject(user, is_club_acc);
+                const currentUser = new userObject(user, is_club_acc.isClub, is_club_acc.clubName);
                 setAuthUser(currentUser);
                 let msg = "success: " + currentUser.authUser.email;
                 console.log(msg);
