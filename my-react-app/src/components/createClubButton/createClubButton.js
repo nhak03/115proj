@@ -24,9 +24,9 @@ const CreateClubButton = () => {
             return;
         }
         else{
-          let msg = "User is making a club as " + authUser.email;
+          let msg = "User is making a club as " + authUser.authUser.email;
           console.log(msg);
-          authorEmail = authUser.email;
+          authorEmail = authUser.authUser.email;
         }
 
     

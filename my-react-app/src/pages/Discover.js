@@ -18,6 +18,7 @@ function Discover() {
           <Header />
           <div>
             {authUser && <CreateClubButton />}
+            {authUser.clubStatus && <p>If you see this, you are a club owner.</p>}
           </div>
           <div>
             <SearchBar />
