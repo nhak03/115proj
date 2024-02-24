@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import useAuthState from '../auth/useAuthState.js';
 
 const CreatePost = () =>
 {
@@ -13,8 +14,7 @@ const CreatePost = () =>
     const [    postTitle    ,    setPostTitle     ] = useState('');
     const [ postDescription , setPostDescription  ] = useState('');
     
-    // TODO: Optional other fields
-    // const[ ... ]
+    const authUser = useAuthState();
 
 
     const [  errorMessage  ,   setErrorMessage  ] = useState('');
@@ -24,6 +24,16 @@ const CreatePost = () =>
     const handleSubmit = async (e) =>
     {
         e.preventDefault();
+        // Ensure user is logged in
+        if(!authUser){
+            setErrorMessage('You must be logged in as a club account to make a post! (1)');
+            return;
+        }
+        // Ensure user is a club account
+        if(authUser.clubStatus === false){
+            setErrorMessage('You must be logged in as a club account to make a post! (2)');
+            return;
+        }
     
         // Validation: Ensure both fields are filled out
         if (!organizationName || !postTitle || !postDescription)
