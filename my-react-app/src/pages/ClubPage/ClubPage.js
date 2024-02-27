@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import Header from '../components/Header/Header.js'
-import PostStream from '../components/PostStream/PostStream.js'
+import PostStream from '../../components/PostStream/PostStream.js'
+import './ClubPage.css'
 
 function ClubPage() {
   const [posts, setPosts] = useState([]);
@@ -35,13 +35,25 @@ function ClubPage() {
   }, []);
 
   return (
-    <div>
-      <Header />
-      <div>
-        <h1>{clubName}</h1>
-      </div>
-      <PostStream posts={posts} />
-  </div>
+    <body>
+      <header class='header-content'>
+        <div class='profile-img'>
+          <img src="club-image.jpg" alt="Club Image"/>
+        </div>
+        <div class='club-name'>{clubName}</div>
+      </header>
+      <main>
+        <div class='club-info'>
+          <h2>Description</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac libero eget diam consequat tincidunt. Mauris eget magna ipsum.</p>
+          <h2>Contact Info</h2>
+          <p>Email: email@email.com<br/>Other Socials: ?</p>
+        </div>
+        <div class='post-stream'>
+          <PostStream posts={posts} /> 
+        </div>
+      </main>
+    </body>
   );
 }
 
