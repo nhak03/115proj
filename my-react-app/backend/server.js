@@ -15,6 +15,9 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/get_posts', async (req, res) => {
+    // const { pageType } = req.body;
+    // pageType = 'whats_new' OR
+    // pageType = 'club_page' -- the actual /path or name of club
     console.log("Someone requested the / path");
     const postCollection = collection(firestore, 'posts');
     const querySnapshot = await getDocs(postCollection);
