@@ -10,7 +10,7 @@ import useAuthState from '../auth/useAuthState.js';
 const CreatePost = () =>
 {
     // Fields for post contents
-    const [ organizationName, setOrganizationName ] = useState('');
+    // const [ organizationName, setOrganizationName ] = useState('');
     const [    postTitle    ,    setPostTitle     ] = useState('');
     const [ postDescription , setPostDescription  ] = useState('');
     
@@ -35,7 +35,7 @@ const CreatePost = () =>
             return;
         }
 
-        setOrganizationName(authUser.clubName);
+        // setOrganizationName(authUser.clubName);
         // Validation: Ensure both fields are filled out
         if (!postTitle || !postDescription)
         {
@@ -44,6 +44,7 @@ const CreatePost = () =>
         };
 
         try {
+          const organizationName = authUser.clubName;
           const backend_response = await fetch('/makePost', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

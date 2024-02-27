@@ -6,7 +6,7 @@ import { auth, db } from '../src/firebase.js';
 
 // const admin = require('firebase-admin');
 
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore"; 
+import { addDoc, collection, getDocs, query, where, doc } from "firebase/firestore"; 
 import { firestore } from '../src/firebase.js'; // Correct way to import 
 
 const app = express();
@@ -45,14 +45,37 @@ app.post('/makePost', async (req, res) => {
     const { organizationName, postTitle, postDescription } = req.body;
 
     try {
-        const docRef = await addDoc(collection(db, "posts"), {
+        // const docRef = await addDoc(collection(db, "posts"), {
+        //     Title: postTitle,
+        //     Description: postDescription,
+        //     Author: organizationName
+        //   });
+        const name = await organizationName;
+
+        const clubs_Snapshot = await getDocs(query(collection(db, "clubs"), where("name", "==", name)));
+        let msg = "Looking for subcollection of club " + name;
+        console.log(msg);
+        if(!clubs_Snapshot.empty){ 
+          // we found the club doc -->
+          const clubDocId = clubs_Snapshot.docs[0].id;
+          // get a reference to the actual club object -->
+          const clubDocRef = doc(db, "clubs", clubDocId);
+          // we got a reference to the Posts subcollection of the specific club -->
+          const postsCollectionRef = collection(clubDocRef, "posts");
+          
+          await addDoc(postsCollectionRef, {
             Title: postTitle,
             Description: postDescription,
-            Author: organizationName
+            Author: name
           });
-
+          res.status(200).json({ success: true });
+        }
+        else{
+          console.error("Error adding post to the club subcollection.");
+          res.status(500).json({ success: false, error: "Error adding post to club subcollection."});
+          return;
+        }
         // console.log("Document written with ID: ", docRef.id);
-        res.status(200).json({ success: true });
     } catch (error) {
         console.error("Error adding document: ", error);
         res.status(500).json({ success: false, error: error.message });
