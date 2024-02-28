@@ -24,7 +24,6 @@ export default function FollowButton({user, clubName}) {
                 loadFollowedClubs(user.uid)
                 if (followedClubs.includes(clubName)) {
                     setFollowingStatus('Following')
-                    return
                 }
                 else {
                     setFollowingStatus('Follow+')
