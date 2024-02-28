@@ -40,16 +40,15 @@ export default function FollowButton({user, clubName}) {
         });
 
         return () => followingData();
-    }, []);
+    }, [user]);
 
 
     async function handleFollowClick() {
         if (!user) {
             alert('You must be signed in to follow a club')
-            return
         }
 
-        if (user) {
+        if  (user) {
             if (followingStatus === 'Following') {
                 deleteFollowedClub(user.uid, clubName)
                 setFollowingStatus('Follow+')
