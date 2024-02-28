@@ -1,7 +1,7 @@
 // useAuthState.js
 import { useEffect, useState } from 'react';
 import { auth, db } from '../../firebase.js';
-import { collection, getDocs, query, where} from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc} from "firebase/firestore";
 import { onAuthStateChanged } from 'firebase/auth';
 
 
@@ -17,6 +17,30 @@ class clubStatus{
     constructor(isClub, clubName){
         this.isClub = isClub; // bool
         this.clubName = clubName // string
+    }
+}
+
+const getUserStatus = async (user_email) => {
+    let email = user_email;
+    // query the users collection
+    // see if the user data exists there --> needed for the followedClubs feature
+    let q = query(collection(db, "Users"), where("email", "==", email));
+    const qSnapshot = await getDocs(q);
+    if(qSnapshot.empty){
+        // if empty, we need to add them into it
+        // get a reference to the path:
+        const usersCollectionRef = collection(db, "Users");
+        // the data to be added: 
+        const userData = {
+            email: email
+        };
+        // make the document in the database:
+        await addDoc(usersCollectionRef, userData);
+    }
+    else{
+        // return a success message
+        let msg = "Object " + email + " exists in the database!";
+        console.log(msg);
     }
 }
 
@@ -59,7 +83,7 @@ const useAuthState = () => {
                 setAuthUser(currentUser);
                 let msg = "success: " + currentUser.authUser.email;
                 console.log(msg);
-                
+                getUserStatus(user.email);
             }
             else{
                 console.log("null case");
