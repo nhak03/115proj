@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import 'reactjs-popup/dist/index.css';
+
+// imports for authstate and firestore frontend queries
 import { getFollowedClubs, setFollowedClub, deleteFollowedClub } from '../../pages/FirestoreService.js';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase.js'; // Ensure this path is correct
+
 
 export default function FollowButton({user, clubName}) {
     const [followedClubs, setFollowedClubs] = useState([])
@@ -19,10 +24,10 @@ export default function FollowButton({user, clubName}) {
 
     //collect the followed clubs
     useEffect (() => { //I dont really know what the useEffect does tbh
-        async function initializeFollowingData() {
+        const followingData = onAuthStateChanged(auth, (user) => {
             if (user) {
                 loadFollowedClubs(user.uid)
-                if (followedClubs.includes(clubName)) {
+                if (followedClubs.some(club => club.name === clubName)) {
                     setFollowingStatus('Following')
                 }
                 else {
@@ -32,9 +37,9 @@ export default function FollowButton({user, clubName}) {
             else {
                 setFollowingStatus('Follow+')
             }
-        };
+        });
 
-        initializeFollowingData()
+        return () => followingData();
     }, []);
 
 
