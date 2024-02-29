@@ -29,13 +29,13 @@ async function getLatestPostsFromClubs(db) {
     for (const clubData of clubList) {
       clubId = clubData.clubId; // Extract and assign to the variable
 
-      // console.log('processing ' + clubId); // Print the extracted value
-      // const postsRef = collection(db, 'clubs', clubId, 'posts');
-      // const q = query(postsRef, orderBy('createdAt', 'desc'), limit(1));
-      // const qSnapshot = await getDocs(q);
       const posts_subcollection = collection(db, `clubs/${clubId}/posts`);
       const qSnapshot = await getDocs(posts_subcollection);
 
+      // this query logic doesn't work?? -- it returns nothing
+      // const q = query(posts_subcollection, orderBy('createdAt', 'desc'), limit(1));
+      //const qSnapshot = await getDocs(q);
+      
       if(!qSnapshot.empty){
         // console.log("found a post");
         const post = {id: qSnapshot.docs[0].id, ...qSnapshot.docs[0].data() };
@@ -89,8 +89,8 @@ app.post('/makePost', async (req, res) => {
         const name = await organizationName;
 
         const clubs_Snapshot = await getDocs(query(collection(db, "clubs"), where("name", "==", name)));
-        let msg = "Looking for subcollection of club " + name;
-        console.log(msg);
+        // let msg = "Looking for subcollection of club " + name;
+        // console.log(msg);
         if(!clubs_Snapshot.empty){ 
           // we found the club doc -->
           const clubDocId = clubs_Snapshot.docs[0].id;
@@ -122,8 +122,8 @@ app.post('/createClub', async(req, res) => {
     const { clubName, clubType, authorEmail } = req.body;
     
     try{
-      let msg = "Author email is: " + authorEmail;
-      console.log(msg);
+      // let msg = "Author email is: " + authorEmail;
+      // console.log(msg);
 
       // see if they already have a club
       let q = query(collection(db, "clubs"), where("author", "==", authorEmail));
