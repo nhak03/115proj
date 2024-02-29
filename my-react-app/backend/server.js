@@ -6,31 +6,67 @@ import { auth, db } from '../src/firebase.js';
 
 // const admin = require('firebase-admin');
 
-import { addDoc, collection, getDocs, query, where, doc } from "firebase/firestore"; 
+import { addDoc, collection, getDocs, query, where, doc, collectionGroup, orderBy, limit } from "firebase/firestore"; 
 import { firestore } from '../src/firebase.js'; // Correct way to import 
 
 const app = express();
+
+async function getLatestPostsFromClubs(db) {
+    let clubList = [];
+    const clubsCollection = collection(db, 'clubs');
+    const clubsSnapshot = await getDocs(clubsCollection);
+    clubsSnapshot.forEach((clubDoc) => {
+      const clubId = clubDoc.id;
+      const clubData = {
+        clubId // Add club ID to the data
+        // Add other relevant club data here (if needed)
+      };
+      clubList.push(clubData);
+    });
+
+    let clubId; // Declare an empty variable
+    let postList = []; // declare an empty posts list
+    for (const clubData of clubList) {
+      clubId = clubData.clubId; // Extract and assign to the variable
+
+      // console.log('processing ' + clubId); // Print the extracted value
+      // const postsRef = collection(db, 'clubs', clubId, 'posts');
+      // const q = query(postsRef, orderBy('createdAt', 'desc'), limit(1));
+      // const qSnapshot = await getDocs(q);
+      const posts_subcollection = collection(db, `clubs/${clubId}/posts`);
+      const qSnapshot = await getDocs(posts_subcollection);
+
+      if(!qSnapshot.empty){
+        // console.log("found a post");
+        const post = {id: qSnapshot.docs[0].id, ...qSnapshot.docs[0].data() };
+        postList.push(post);
+      }
+    }
+    // console.log(postList);
+    return postList;
+}
+
 
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
 app.post('/get_posts', async (req, res) => {
-    // const { pageType } = req.body;
-    // pageType = 'whats_new' OR
+    const { pageType } = req.body;
+    let from_DB_Posts;
+    // pageType = 'whatsnew' OR
     // pageType = 'club_page' -- the actual /path or name of club
-    console.log("Someone requested the / path");
-    const postCollection = collection(firestore, 'posts');
-    const querySnapshot = await getDocs(postCollection);
-    let from_DB_Posts = [];
-    querySnapshot.forEach((doc) => {
-        from_DB_Posts.push({ id: doc.id, ...doc.data() });
-    });
+    if(pageType === 'whatsnew'){
+      // get the clubs since each one has a posts subcollection
+      from_DB_Posts = await getLatestPostsFromClubs(db);
+      // console.log("From outside the function: " + from_DB_Posts);
+    }
 
+    // console.log("Sending posts to the frontend");
     res.status(200).json({ success: true, posts: from_DB_Posts });
 });
 
 app.post('/get_clubs', async (req, res) => {
-  console.log("Someone requested the /get_clubs path");
+  // console.log("Someone requested the /get_clubs path");
   const postCollection = collection(firestore, 'clubs');
   const querySnapshot = await getDocs(postCollection);
   let from_DB_Clubs = [];
