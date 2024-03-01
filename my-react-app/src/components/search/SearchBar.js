@@ -62,9 +62,9 @@ const SearchBar = () => {
           </thead>
           <tbody>
             {filteredClubs.map((club) => (
-              <tr key={club.name} onclick={`window.location.href = '/club_page/?param1=${club.name}';`} >
-                <td>{club.name}</td>
-                <td>{club.type}</td>
+              <tr key={club.name}>
+                <td><a href={`/club_page/${encodeURIComponent(club.name)}`} style={{ textDecoration: 'none', color: 'inherit' }}> {club.name}</a></td>
+                <td><a href={`/club_page/${encodeURIComponent(club.name)}`} style={{ textDecoration: 'none', color: 'inherit' }}> {club.type}</a></td>
               </tr>
             ))}
           </tbody>

@@ -1,0 +1,69 @@
+header {
+    background-color: #00274d;
+    color: #ffd100; /* UCSC Yellow */
+    padding: 10px;
+    text-align: center;
+    position: relative; /* Add this line */
+}
+
+.header-content {
+    color:  #fdc700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+  
+nav li {
+flex-grow: 1;
+text-align: center;
+}
+
+.club-name {
+    padding: 10px;
+    font-size: 50px;
+    color: #fdc700;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.club-info {
+    background-color: rgba(128, 128, 128, 0.788);
+    width: 30%;
+    max-height: auto;
+    display: inline-block;
+}
+
+.profile-img {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+    border-radius: 50%; /* Make it circular */
+    overflow: hidden; /* Ensure image stays within the circular bounds */
+    border: 2px solid #fdc700;
+    background-color: white;
+    padding: 10px;
+}
+
+.header img {
+    width: 100%; /* Make sure image takes up the whole space */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any extra space below the image */
+}
+
+.post-stream {
+    width: 70%;
+    max-height:1000px;
+    overflow-y: auto; /* Enable vertical scroll for overflow */
+}
+
