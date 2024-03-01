@@ -25,9 +25,16 @@ function ClubPage() {
         //   console.log("Server recieved our request to query the database.");
         // }
         const backendStatus = await backend_response.json();
+
         if(backend_response.status === 404){
-          // console.log("404 error: " + backendStatus.error);
+          console.log("404 error: " + backendStatus.error);
           let msg = "404 error: " + backendStatus.error;
+          setErrorMessage(msg);
+          return;
+        }
+        if(backend_response.status === 206){
+          console.log("206 case");
+          let msg = "Http 206: " + backendStatus.message;
           setErrorMessage(msg);
           return;
         }

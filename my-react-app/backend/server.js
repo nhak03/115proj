@@ -51,13 +51,15 @@ async function getAllClubPosts(db, clubName){
   let postList = [];
   let clubTitle = '';
   let success_state = false;
+  let clubFound = false;
   const clubsCollection = collection(db, 'clubs');
   // clubName here is auto formatted to be all lowercase
   // which is how the club_url is supposed to be
   const q = query(clubsCollection, where('club_url', '==', clubName));
   const qSnapshot = await getDocs(q);
   if(!qSnapshot.empty){
-    console.log("getAllClubPosts found the club entry for url: " + clubName)
+    console.log("getAllClubPosts found the club entry for url: " + clubName);
+    clubFound = true;
     const clubDoc = qSnapshot.docs[0];
     const clubId = clubDoc.id;
 
@@ -80,7 +82,8 @@ async function getAllClubPosts(db, clubName){
   return {
     postList: postList,
     clubTitle: clubTitle,
-    success: success_state
+    success: success_state,
+    clubFound: clubFound
   }
 }
 
@@ -104,7 +107,13 @@ app.post('/get_posts', async (req, res) => {
       // let msg = 'requesting the club page: ' + clubName;
       // console.log(msg);
       let result = await getAllClubPosts(db, clubName);
-      
+      if(result.success === false && result.clubFound === true){
+        let err_msg = "Club: " + result.clubTitle + " has made no posts yet!";
+        console.log(err_msg);
+        res.status(206).json({ success: false, message: err_msg });
+        return;
+      }
+
       if(result.success === false){
         let err_msg = "We couldn't find that club! (url: " + clubName + ")"; 
         res.status(404).json({ success: false, error: err_msg });
