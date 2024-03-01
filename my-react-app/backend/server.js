@@ -46,6 +46,40 @@ async function getLatestPostsFromClubs(db) {
     return postList;
 }
 
+async function getAllClubPosts(db, clubName){
+  console.log("getAllClubPosts searching for " + clubName);
+  let postList = [];
+  let clubTitle = '';
+  const clubsCollection = collection(db, 'clubs');
+  // clubName here is auto formatted to be all lowercase
+  // which is how the club_url is supposed to be
+  const q = query(clubsCollection, where('club_url', '==', clubName));
+  const qSnapshot = await getDocs(q);
+  if(!qSnapshot.empty){
+    console.log("getAllClubPosts found the club entry for url: " + clubName)
+    const clubDoc = qSnapshot.docs[0];
+    const clubId = clubDoc.id;
+
+    clubTitle = await clubDoc.data().name;
+    console.log("getAllClubPosts -> clubTitle defined as: " + clubTitle);
+
+    const posts_subcollection = collection(db, `clubs/${clubId}/posts`);
+    const posts_snapshot = await getDocs(posts_subcollection);
+
+    if(!posts_snapshot.empty){ // if there are posts to load
+      console.log("getAllClubPosts: " + clubName + " has posts to be rendered");
+      posts_snapshot.forEach((post_doc) => {
+        const post_object = { id: post_doc.id, ...post_doc.data() };
+        postList.push(post_object);
+      }); 
+    }
+  }
+  return {
+    postList: postList,
+    clubTitle: clubTitle
+  }
+}
+
 
 // Middleware to parse incoming JSON data
 app.use(bodyParser.json());
@@ -53,6 +87,7 @@ app.use(bodyParser.json());
 app.post('/get_posts', async (req, res) => {
     const { pageType } = req.body;
     let from_DB_Posts;
+    let clubTitle;
     // pageType = 'whatsnew' OR
     // pageType = 'club_page' -- the actual /path or name of club
     if(pageType === 'whatsnew'){
@@ -60,9 +95,17 @@ app.post('/get_posts', async (req, res) => {
       from_DB_Posts = await getLatestPostsFromClubs(db);
       // console.log("From outside the function: " + from_DB_Posts);
     }
-
-    // console.log("Sending posts to the frontend");
-    res.status(200).json({ success: true, posts: from_DB_Posts });
+    else if(pageType === 'clubPage'){
+      const {clubName} = req.body;
+      // let msg = 'requesting the club page: ' + clubName;
+      // console.log(msg);
+      let result = await getAllClubPosts(db, clubName);
+      from_DB_Posts = result.postList;
+      clubTitle = result.clubTitle;
+      console.log("Sending club posts from: " + clubTitle);
+    }
+    
+    res.status(200).json({ success: true, posts: from_DB_Posts, clubTitle: clubTitle });
 });
 
 app.post('/get_clubs', async (req, res) => {
@@ -128,8 +171,11 @@ app.post('/createClub', async(req, res) => {
       // see if they already have a club
       let q = query(collection(db, "clubs"), where("author", "==", authorEmail));
 
+      // convert to url form: will be used to render club pages
+      let club_url = clubName.toLowerCase();
+
       // see if the club exists already
-      let existingName_query = query(collection(db, "clubs"), where("name", "==", clubName));
+      let existingName_query = query(collection(db, "clubs"), where("club_url", "==", club_url));
 
       const qSnapshot = await getDocs(q);
       const existingName = await getDocs(existingName_query);
@@ -145,11 +191,14 @@ app.post('/createClub', async(req, res) => {
       }else if (qSnapshot.empty) {
         // if they don't have a club
         // allow the user to make one
-        console.log("createClub: successful club creation")
+        console.log("createClub: successful club creation");
+        
+        
         const docRef = await addDoc(collection(db, "clubs"), {
           name: clubName,
           type: clubType,
-          author: authorEmail
+          author: authorEmail,
+          club_url: club_url
         });
         res.status(200).json({ success: true, message: "Club created successfully!" });
       } else if(!qSnapshot.empty){

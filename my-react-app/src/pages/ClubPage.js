@@ -7,14 +7,18 @@ function ClubPage() {
   const [posts, setPosts] = useState([]);
   let { clubName } = useParams();
 
+  // to be used for the html page header
+  const [clubTitle, setClubTitle] = useState('');
+
   // change this to only collect club's posts
   useEffect(() => {
     const fetchPosts = async () => {
+      const pageType = 'clubPage';
       try {
         const backend_response = await fetch('/get_posts', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
-          // body: JSON.stringify({ clubName, clubType }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pageType, clubName })
         });
         if(backend_response.ok){
           console.log("Server recieved our request to query the database.");
@@ -24,6 +28,7 @@ function ClubPage() {
           // console.log("Server responded with a success!");
           // success respond means that we have the array
           setPosts(backendStatus.posts);
+          setClubTitle(backendStatus.clubTitle);
           console.log("displaying posts...");
         }
       } catch (error) {
@@ -38,7 +43,7 @@ function ClubPage() {
     <div>
       <Header />
       <div>
-        <h1>{clubName}</h1>
+        <h1>{clubTitle}</h1>
       </div>
       <PostStream posts={posts} />
   </div>
