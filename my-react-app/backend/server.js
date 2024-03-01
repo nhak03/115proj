@@ -50,6 +50,7 @@ async function getAllClubPosts(db, clubName){
   console.log("getAllClubPosts searching for " + clubName);
   let postList = [];
   let clubTitle = '';
+  let success_state = false;
   const clubsCollection = collection(db, 'clubs');
   // clubName here is auto formatted to be all lowercase
   // which is how the club_url is supposed to be
@@ -72,11 +73,14 @@ async function getAllClubPosts(db, clubName){
         const post_object = { id: post_doc.id, ...post_doc.data() };
         postList.push(post_object);
       }); 
+      success_state = true;
     }
   }
+  // if it is empty, then return an empty postList and clubTitle
   return {
     postList: postList,
-    clubTitle: clubTitle
+    clubTitle: clubTitle,
+    success: success_state
   }
 }
 
@@ -100,6 +104,13 @@ app.post('/get_posts', async (req, res) => {
       // let msg = 'requesting the club page: ' + clubName;
       // console.log(msg);
       let result = await getAllClubPosts(db, clubName);
+      
+      if(result.success === false){
+        let err_msg = "We couldn't find that club! (url: " + clubName + ")"; 
+        res.status(404).json({ success: false, error: err_msg });
+        return;
+      }
+
       from_DB_Posts = result.postList;
       clubTitle = result.clubTitle;
       console.log("Sending club posts from: " + clubTitle);

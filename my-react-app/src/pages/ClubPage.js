@@ -5,6 +5,7 @@ import PostStream from '../components/PostStream/PostStream.js'
 
 function ClubPage() {
   const [posts, setPosts] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
   let { clubName } = useParams();
 
   // to be used for the html page header
@@ -20,10 +21,16 @@ function ClubPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pageType, clubName })
         });
-        if(backend_response.ok){
-          console.log("Server recieved our request to query the database.");
-        }
+        // if(backend_response.ok){
+        //   console.log("Server recieved our request to query the database.");
+        // }
         const backendStatus = await backend_response.json();
+        if(backend_response.status === 404){
+          // console.log("404 error: " + backendStatus.error);
+          let msg = "404 error: " + backendStatus.error;
+          setErrorMessage(msg);
+          return;
+        }
         if(backendStatus.success){
           // console.log("Server responded with a success!");
           // success respond means that we have the array
@@ -43,7 +50,8 @@ function ClubPage() {
     <div>
       <Header />
       <div>
-        <h1>{clubTitle}</h1>
+        {errorMessage && <h1>{errorMessage}</h1>}
+        {!errorMessage && <h1>{clubTitle}</h1>}
       </div>
       <PostStream posts={posts} />
   </div>
