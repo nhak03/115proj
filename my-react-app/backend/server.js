@@ -66,7 +66,8 @@ async function getAllClubPosts(db, clubName){
     clubTitle = await clubDoc.data().name;
     console.log("getAllClubPosts -> clubTitle defined as: " + clubTitle);
 
-    const posts_subcollection = collection(db, `clubs/${clubId}/posts`);
+    const posts_subcollection = query(collection(db, `clubs/${clubId}/posts`));
+
     const posts_snapshot = await getDocs(posts_subcollection);
 
     if(!posts_snapshot.empty){ // if there are posts to load
