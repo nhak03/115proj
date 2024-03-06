@@ -1,4 +1,3 @@
-// useAuthState.js
 import { useEffect, useState } from 'react';
 import { auth } from '../../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
