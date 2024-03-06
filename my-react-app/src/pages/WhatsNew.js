@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import Post from '../components/Post/Post.js'
 import Header from '../components/Header/Header.js'
+import PostStream from '../components/PostStream/PostStream.js'
 
 function WhatsNew() {
   const [posts, setPosts] = useState([]);
@@ -33,22 +33,11 @@ function WhatsNew() {
 
   return (
     <div className="Home">
-    <Header />
-    <div>
-      {posts ? (
-        posts.map(post => (
-          <div key={post.id}>
-            <h3>{post.Title}</h3>
-            <p>Author: {post.Author}</p>
-            <p>{post.Description}</p>
-            {post.Image && <img src={post.Image} alt="Post" />}
-          </div>
-        ))
-      ) : (
-        <p>Loading...</p>
-      )}
+      <Header />
+      <div>
+        <PostStream posts={posts} />
+      </div>
     </div>
-  </div>
   );
 }
 
