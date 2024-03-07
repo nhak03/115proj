@@ -78,7 +78,7 @@ function ClubPage() {
               <img src="club-image.jpg" alt="Club"/>
             </div>
             <div class='club-name'>{clubTitle}</div>
-            <div><FollowButton user={authUser} clubName={clubName}/></div>
+            <div><FollowButton user={authUser && authUser.authUser} clubName={clubName}/></div>
           </div>
           <div>
             <nav>

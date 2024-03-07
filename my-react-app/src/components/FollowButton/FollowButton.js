@@ -40,7 +40,7 @@ export default function FollowButton({user, clubName}) {
         });
 
         return () => followingData();
-    }, [user]);
+    }, []);
 
 
     async function handleFollowClick() {
