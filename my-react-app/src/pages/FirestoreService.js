@@ -1,5 +1,5 @@
 import { db } from '../firebase.js'; // adjust the import path as necessary
-import { collection, getDocs, doc, setDoc, deleteDoc} from 'firebase/firestore';
+import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, query, where} from 'firebase/firestore';
 
 export const getFollowedClubs = async (userId) => {
     const clubsCollection = collection(db, `Users/${userId}/followedClubs`);
@@ -17,5 +17,21 @@ export const deleteFollowedClub = async (userId, clubName) => {
     const userClubDocRef = doc(db, `Users/${userId}/followedClubs/${clubName}`);
     const response = await deleteDoc(userClubDocRef)
     return response
+}
+
+export const updateDocKVPair = async (docPath, contentKey, content) => {
+    const docRef = doc(db, `${docPath}`);
+    contentKey.replace(/ /g, "_");
+    const response = await updateDoc(docRef, {[contentKey]: `${content}`})
+    return response
+}
+
+export const getClubDoc = async (clubName) => {
+    clubName = clubName.toLowerCase()
+    const q = query(collection(db, 'clubs'), where('club_url', '==', clubName));
+    const querySnapshot = await getDocs(q);
+    const clubDoc = querySnapshot.docs[0];
+    const data = clubDoc.data();
+    return { id: clubDoc.id, ...data }; // Include document ID in the result
 }
 
