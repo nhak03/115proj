@@ -8,7 +8,7 @@ import { auth } from '../../firebase.js'; // Ensure this path is correct
 
 
 export default function FollowButton({user, clubName}) {
-    const [authUser, setAuthUser] = useState(null);
+    // const [authUser, setAuthUser] = useState(null);
     // const [followedClubs, setFollowedClubs] = useState([]);
     const [followingStatus, setFollowingStatus] = useState('Follow+'); //String so the status can easily be used for Button Text
 
@@ -57,16 +57,16 @@ export default function FollowButton({user, clubName}) {
         console.log("I fire once");
         const followingData = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setAuthUser(user);
+                // setAuthUser(user);
                 loadFollowedClubs(user.uid);
             } else {
-                setAuthUser(null);
+                // setAuthUser(null);
                 setFollowingStatus('Follow+');
             }
         });
 
         return () => followingData();
-    }, [authUser]);
+    });
 
     return (
         <div>
