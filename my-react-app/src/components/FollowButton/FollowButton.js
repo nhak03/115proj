@@ -8,41 +8,34 @@ import { auth } from '../../firebase.js'; // Ensure this path is correct
 
 
 export default function FollowButton({user, clubName}) {
-    const [followedClubs, setFollowedClubs] = useState([])
-    const [followingStatus, setFollowingStatus] = useState('Follow+') //String so the status can easily be used for Button Text
+    const [authUser, setAuthUser] = useState(null);
+    // const [followedClubs, setFollowedClubs] = useState([]);
+    const [followingStatus, setFollowingStatus] = useState('Follow+'); //String so the status can easily be used for Button Text
 
 
     //copied from Ronith's Profile.js page
     async function loadFollowedClubs(userId) {
         try {
             const followedClubs = await getFollowedClubs(userId);
-            setFollowedClubs(followedClubs);
+            if(followedClubs.empty){
+                console.log("User does not follow any clubs");
+            }
+            else{
+                console.log("User does follow some clubs");
+                // console.log("The first followed club: " + followedClubs[0].clubName);
+                for(let i=0; i<followedClubs.length; i++){
+                    if(followedClubs[i].clubName === clubName){
+                        setFollowingStatus('Following');
+                        break;
+                    }
+                }
+            }
         } catch (error) {
             console.error("Error fetching followed clubs: ", error);
         }
     }
 
-    //collect the followed clubs
-    useEffect (() => { //I dont really know what the useEffect does tbh
-        const followingData = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loadFollowedClubs(user.uid)
-                if (followedClubs.some(club => club.name === clubName)) {
-                    setFollowingStatus('Following')
-                }
-                else {
-                    setFollowingStatus('Follow+')
-                }
-            }
-            else {
-                setFollowingStatus('Follow+')
-            }
-        });
-
-        return () => followingData();
-    }, []);
-
-
+    // logic to update the follow button state on click
     async function handleFollowClick() {
         if (!user) {
             alert('You must be signed in to follow a club')
@@ -60,10 +53,24 @@ export default function FollowButton({user, clubName}) {
         }
     }
 
+    useEffect (() => { 
+        console.log("I fire once");
+        const followingData = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setAuthUser(user);
+                loadFollowedClubs(user.uid);
+            } else {
+                setAuthUser(null);
+                setFollowingStatus('Follow+');
+            }
+        });
+
+        return () => followingData();
+    }, [authUser]);
 
     return (
         <div>
             <button id="followButton" onClick={handleFollowClick}><h1>{followingStatus}</h1></button>
         </div>
-    )
+    );
 }

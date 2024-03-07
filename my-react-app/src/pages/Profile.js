@@ -45,7 +45,7 @@ const Profile = () => {
                     <h2>Clubs I Follow</h2>
                     <ul>
                         {clubs.map(club => (
-                            <li key={club.clubID}>{club.name}</li> // Replace 'name' with the actual field you have for club names
+                            <li key={club.clubID}>{club.clubName}</li>
                         ))}
                     </ul>
                 </>

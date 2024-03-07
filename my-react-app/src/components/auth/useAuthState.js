@@ -8,6 +8,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 class userObject {
     constructor(authUser, isClub, clubName, Club_Doc_ID) {
         this.authUser = authUser;
+        // next 3 fields are only defined if the logged in user is a club owner
+        // false, '', '' otherwise
         this.clubStatus = isClub;
         this.clubName = clubName;
         this.Club_Doc_ID = Club_Doc_ID;

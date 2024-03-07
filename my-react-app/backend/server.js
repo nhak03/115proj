@@ -145,11 +145,6 @@ app.post('/makePost', async (req, res) => {
     const { organizationName, postTitle, postDescription } = req.body;
 
     try {
-        // const docRef = await addDoc(collection(db, "posts"), {
-        //     Title: postTitle,
-        //     Description: postDescription,
-        //     Author: organizationName
-        //   });
         const name = await organizationName;
 
         const clubs_Snapshot = await getDocs(query(collection(db, "clubs"), where("name", "==", name)));
