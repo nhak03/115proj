@@ -138,7 +138,7 @@ app.post('/get_clubs', async (req, res) => {
       from_DB_Clubs.push({ id: doc.id, ...doc.data() });
   });
 
-  res.status(200).json({ success: true, posts: from_DB_Clubs });
+  res.status(200).json({ success: true, clubs: from_DB_Clubs });
 });
 
 app.post('/makePost', async (req, res) => {

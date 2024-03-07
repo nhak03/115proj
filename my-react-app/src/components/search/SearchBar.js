@@ -21,7 +21,7 @@ const SearchBar = () => {
             if(backendStatus.success){
               // console.log("Server responded with a success!");
               // success respond means that we have the array
-              setClubs(backendStatus.posts);
+              setClubs(backendStatus.clubs);
               console.log("displaying clubs...");
             }
         } catch (error) {
@@ -63,8 +63,8 @@ const SearchBar = () => {
           <tbody>
             {filteredClubs.map((club) => (
               <tr key={club.name}>
-                <td><a href={`/club_page/${encodeURIComponent(club.name)}`} style={{ textDecoration: 'none', color: 'inherit' }}> {club.name}</a></td>
-                <td><a href={`/club_page/${encodeURIComponent(club.name)}`} style={{ textDecoration: 'none', color: 'inherit' }}> {club.type}</a></td>
+                <td><a href={`/club_page/${encodeURIComponent(club.club_url)}`} style={{ textDecoration: 'none', color: 'inherit' }}> {club.name}</a></td>
+                <td><a href={`/club_page/${encodeURIComponent(club.club_url)}`} style={{ textDecoration: 'none', color: 'inherit' }}> {club.type}</a></td>
               </tr>
             ))}
           </tbody>
