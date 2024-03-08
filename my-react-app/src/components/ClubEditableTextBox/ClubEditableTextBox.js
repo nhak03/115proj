@@ -10,7 +10,7 @@ function ClubEditableTextBox({ initialText, formTitle, Club_Doc_ID, pageOwnerSta
     // Update textInput state when initialText changes
     setOwnerStatus(pageOwnerStatus)
     setTextInput(initialText);
-  }, [initialText]);
+  }, [initialText, pageOwnerStatus]);
 
   const handleEditClick = () => {
     setIsEditing(true);

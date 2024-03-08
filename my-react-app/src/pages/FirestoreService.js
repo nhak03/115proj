@@ -21,7 +21,7 @@ export const deleteFollowedClub = async (userId, clubName) => {
 
 export const updateDocKVPair = async (docPath, contentKey, content) => {
     const docRef = doc(db, `${docPath}`);
-    contentKey.replace(/ /g, "_");
+    contentKey = contentKey.replace(/ /g, "_");
     const response = await updateDoc(docRef, {[contentKey]: `${content}`})
     return response
 }

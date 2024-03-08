@@ -18,6 +18,7 @@ function ClubPage() {
   const [description, setClubDescription] = useState('No Club Description');
   const [contactInfo, setClubContactInfo] = useState('No Club Contact Information');
   const [pageOwnerStatus, setPageOwnerStatus] = useState(false);
+  const [clubDocID, setClubDocID] = useState('None')
   
   // to be used for the html page header
   const [clubTitle, setClubTitle] = useState('');
@@ -54,22 +55,24 @@ function ClubPage() {
           setPosts(backendStatus.posts);
           setClubTitle(backendStatus.clubTitle);
           console.log("displaying posts...");
+
           // collect description and contact info for display
-          console.log('fetched')
-          console.log(clubDoc)
           // console.log("from jacks function" + clubDoc.then(function(result)))
           clubDoc.then(function(club){
             if (club.Description) {
-              console.log("Description is set: " + club.Description)
               setClubDescription(club.Description)
             }
             if (club.Contact_Information) {
               setClubContactInfo(club.Contact_Information)
             }
+            if (club.id) {
+              setClubDocID(club.id)
+            }
           })
 
           // confirm club ownership
-          if (authUser && authUser.Club_Doc_ID === clubDoc.id) {
+          if (authUser && authUser.Club_Doc_ID === clubDocID) {
+            console.log("status changes")
             setPageOwnerStatus(true)
           }
           else {
@@ -115,8 +118,8 @@ function ClubPage() {
         </header>
         <main>
           <div class='club-info'>
-            <div><ClubEditableTextBox initialText={description} formTitle={'Description'} Club_Doc_ID={clubDoc.id} pageOwnerStatus={pageOwnerStatus}/></div>
-            <div><ClubEditableTextBox initialText={contactInfo} formTitle={'Contact Information'} Club_Doc_ID={clubDoc.id} pageOwnerStatus={pageOwnerStatus}/></div>
+            <div><ClubEditableTextBox initialText={description} formTitle={'Description'} Club_Doc_ID={clubDocID} pageOwnerStatus={pageOwnerStatus}/></div>
+            <div><ClubEditableTextBox initialText={contactInfo} formTitle={'Contact Information'} Club_Doc_ID={clubDocID} pageOwnerStatus={pageOwnerStatus}/></div>
           </div>
           <div class='post-stream'>
             <div>
