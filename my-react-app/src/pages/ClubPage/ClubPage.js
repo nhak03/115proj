@@ -13,6 +13,11 @@ import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
 import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import faUser icon
 
+import Modal from '../../components/Modal.js';
+import SignIn from '../../components/auth/SignIn.jsx';
+import SignUp from '../../components/auth/SignUp.jsx';
+import AuthDetails from '../../components/auth/AuthDetails.jsx';
+
 function ClubPage() {
   const [posts, setPosts] = useState([]);
   let { clubName } = useParams();
@@ -23,6 +28,10 @@ function ClubPage() {
   const [contactInfo, setClubContactInfo] = useState('No Club Contact Information');
   const [pageOwnerStatus, setPageOwnerStatus] = useState(false);
   const [clubDocID, setClubDocID] = useState('None')
+
+  const [showModal, setShowModal] = useState(false);
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
   
   // to be used for the html page header
   const [clubTitle, setClubTitle] = useState('');
@@ -103,6 +112,16 @@ function ClubPage() {
       <body>
         {/*Didn't use prebuilt header, since we want follow button to be present here*/}
         <header>
+          <div className="auth-controls">
+            {authUser ? (
+              <>
+                <AuthDetails />
+                {/* Implement the signOut function and pass it to AuthDetails if needed */}
+              </>
+            ) : (
+              <button onClick={handleOpenModal}>Log In / Sign Up</button>
+            )}
+          </div>
         <div className="profile-button-container">
           <Link to="/profile">
             <FontAwesomeIcon icon={faUser} className="profile-icon" />
@@ -124,6 +143,12 @@ function ClubPage() {
               </ul>
             </nav>
           </div>
+          {showModal && (
+            <Modal onClose={handleCloseModal}>
+              <SignIn />
+              <SignUp />
+            </Modal>
+          )}
         </header>
         <main>
           <div class='club-info'>
