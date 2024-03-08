@@ -29,9 +29,9 @@ function App() {
         </div>
         </BrowserRouter>
 
-        <SignIn />
+        {/* <SignIn />
         <SignUp />
-        <AuthDetails />
+        <AuthDetails /> */}
         
       </div>
   );

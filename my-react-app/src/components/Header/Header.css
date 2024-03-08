@@ -1,6 +1,4 @@
-/* Header.css */
-
-header {
+  .header {
     background-color: #00274d; /* UCSC Dark Blue */
     color: #ffd100; /* UCSC Yellow */
     padding: 10px;
@@ -8,13 +6,48 @@ header {
     position: relative; /* Add this line */
   }
   
+  .top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
   .logo {
     max-width: 100px; /* Adjust the size as needed */
     margin-right: 10px; /* Add margin if needed */
-    position: absolute; /* Add this line */
     top: 10px; /* Adjust the top position as needed */
     left: 10px; /* Adjust the left position as needed */
   }
+  
+  h1 {
+    font-size: 3em; /* Make it large */
+    color: #ffd100; /* UCSC Yellow */
+    margin: 0; /* Reset margin */
+  }
+  
+  .auth-controls {
+    /* Adjust as necessary for your sign in/sign out buttons */
+  }
+  
+  
+  h1 {
+    font-size: 3em; /* Make it large */
+    color: #ffd100; /* UCSC Yellow */
+    margin: 0; /* Reset margin */
+  }
+  
+  .auth-controls {
+    /* Adjust as necessary for your sign in/sign out buttons */
+  }
+  
   
   .profile-button-container {
     position: fixed;
