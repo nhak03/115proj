@@ -16,6 +16,17 @@ header {
     left: 10px; /* Adjust the left position as needed */
   }
   
+  .profile-button-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+  }
+  .profile-icon {
+    font-size: 24px;
+    color: #ffd100; /* UCSC Yellow */
+    cursor: pointer;
+  }
   nav ul {
     list-style: none;
     padding: 0;

@@ -1,6 +1,9 @@
 // Header.js
 
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import faUser icon
 import './Header.css';
 import logo from './SL_logo.png'; // Update the path
 import CreatePost from '../createPost/createPost.js';
@@ -12,6 +15,11 @@ const Header = () => {
   
   return (
     <header>
+      <div className="profile-button-container">
+        <Link to="/profile">
+          <FontAwesomeIcon icon={faUser} className="profile-icon" />
+        </Link>
+      </div>
       <img src={logo} alt="SlimeLine Logo" className="logo" />
       <h1>SlimeLine</h1>
       <nav>

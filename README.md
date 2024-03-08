@@ -12,6 +12,7 @@ NOTE: if you did a git pull to get all the files, then just do
 2. npm install react react-dom express
 3. npm install body-parser
 4. npm install axios
+12. npm install firebase react-firebase-hooks @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
 5. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 6. nvm install 14
 7. nvm use 14 --> if err "nvm command not found", close terminal and open new one
@@ -23,8 +24,7 @@ NOTE: if you did a git pull to get all the files, then just do
     edit /115proj/my-react-app/package.json to have "start" in section "scripts" defined as:
     "start": "concurrently \"node server.js\" \"react-scripts start\""
 11. if you did step 10, just do "npm start" to start both the backend and the frontend at the same time in only one terminal!
-12. npm install firebase
-13. npm install react-firebase-hooks
+
 
 Setup Instructions (starting from scratch):
 
