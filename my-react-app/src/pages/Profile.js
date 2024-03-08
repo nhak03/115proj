@@ -66,6 +66,20 @@ const Profile = () => {
                     <p>Please sign in to see your profile.</p>
                 )}
             </div>
+            <h1>My Profile</h1>
+            {authUser ? (
+                <>
+                    <p>Signed in as {authUser.email}</p>
+                    <h2>Clubs I Follow</h2>
+                    <ul>
+                        {clubs.map(club => (
+                            <li key={club.clubID}>{club.clubName}</li>
+                        ))}
+                    </ul>
+                </>
+            ) : (
+                <p>Please sign in to see your profile.</p>
+            )}
         </div>
     );
 }

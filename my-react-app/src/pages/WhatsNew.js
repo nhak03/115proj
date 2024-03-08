@@ -7,11 +7,12 @@ function WhatsNew() {
 
   useEffect(() => {
     const fetchPosts = async () => {
+        const pageType = 'whatsnew';
         try {
             const backend_response = await fetch('/get_posts', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' }
-              // body: JSON.stringify({ clubName, clubType }),
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ pageType })
             });
             if(backend_response.ok){
               console.log("Server recieved our request to query the database.");
