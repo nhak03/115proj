@@ -12,7 +12,7 @@ NOTE: if you did a git pull to get all the files, then just do
 2. npm install react react-dom express
 3. npm install body-parser
 4. npm install axios
-12. npm install firebase react-firebase-hooks @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+12. npm install firebase react-firebase-hooks @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core
 5. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 6. nvm install 14
 7. nvm use 14 --> if err "nvm command not found", close terminal and open new one
