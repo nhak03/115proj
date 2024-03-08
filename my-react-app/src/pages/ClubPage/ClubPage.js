@@ -9,6 +9,10 @@ import ClubEditableTextBox from '../../components/ClubEditableTextBox/ClubEditab
 import useAuthState from '../../components/auth/useAuthState.js';
 import { getClubDoc } from '../FirestoreService.js';
 
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import faUser icon
+
 function ClubPage() {
   const [posts, setPosts] = useState([]);
   let { clubName } = useParams();
@@ -99,6 +103,11 @@ function ClubPage() {
       <body>
         {/*Didn't use prebuilt header, since we want follow button to be present here*/}
         <header>
+        <div className="profile-button-container">
+          <Link to="/profile">
+            <FontAwesomeIcon icon={faUser} className="profile-icon" />
+          </Link>
+        </div>
           <div class='header-content'>
             <div class='profile-img'>
               <img src="club-image.jpg" alt="Club"/>
