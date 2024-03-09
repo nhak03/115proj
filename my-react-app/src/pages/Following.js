@@ -1,45 +1,64 @@
-// import React, { useState } from 'react';
-// import Post from '../components/Post/Post.js';
+import React, { useState, useEffect } from 'react';
+import Post from '../components/Post/Post.js';
 import PostStream from '../components/PostStream/PostStream.js'
 import Header from '../components/Header/Header.js';
+import useAuthState from '../components/auth/useAuthState.js';
 
 function Following(){
-    const posts = [
-        {
-          Author: 'Administration',
-          Title: 'Information',
-          Description: "Serving you the static /following page",
-          timestamp: '2021-02-01T18:00:00.000Z'
-        },
-        {
-          Author: 'Art Club',
-          Title: 'Art Exhibition',
-          Description: 'Explore the world of creativity at our upcoming art exhibition. Our talented artists will showcase their latest works. Admission is free, and everyone is welcome!',
-          timestamp: '2024-02-10T19:30:00.000Z'
-        },
-        {
-          Author: 'Computer Science Club',
-          Title: 'Coding Workshop',
-          Description: 'Learn the basics of coding with our hands-on workshop. Whether you are a beginner or an experienced coder, this event is a great opportunity to enhance your skills and connect with fellow enthusiasts.',
-          timestamp: '2024-02-15T15:00:00.000Z'
-        },
-        {
-          Author: 'Environmental Club',
-          Title: 'Nature Cleanup Day',
-          Description: 'Join us in preserving the environment by participating in our Nature Cleanup Day. Together, we can make a positive impact on our local ecosystem. Gloves and bags will be provided.',
-          timestamp: '2024-02-20T09:00:00.000Z'
-        },
-        // Add more posts as needed
-      ];
+    const [posts, setPosts] = useState([]);
+    const [errorMsg, setErrorMsg] = useState('');
+    const authUser = useAuthState();
+
+    useEffect(() => {
+      const fetchPosts = async () => {
+          const pageType = 'following';
+          if(authUser){
+            let email = authUser.authUser.email;
+            let userPath = authUser.authUser.uid;
+            try {
+                const backend_response = await fetch('/get_posts', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ pageType, email, userPath })
+                });
+                if(backend_response.ok){
+                  console.log("Server saw our GET for /following");
+                }
+                const backendStatus = await backend_response.json();
+                if(backend_response.status === 206){
+                  console.log("206 case");
+                  let msg = backendStatus.message;
+                  setErrorMsg(msg);
+                  return;
+                }
+                if(backendStatus.success){
+                  // console.log("Server responded with a success!");
+                  // success respond means that we have the array
+                  setPosts(backendStatus.posts);
+                  console.log("displaying posts...");
+                }
+            } catch (error) {
+                console.error('Error fetching posts: ', error);
+            }
+          }
+      };
+      
+      fetchPosts();
+  }, [authUser]);
+
     return(
-        <div className="Following">
-            <div>
-                <Header />
-                <div>
-                  <PostStream posts={posts} />
-                </div>
-            </div>
-        </div>
+      <div>
+      <Header/>
+      <h1>Following Tab!</h1>
+      <h1>{errorMsg}</h1>
+      {authUser ? (
+          <div>
+            <PostStream posts={posts} />
+          </div>
+      ) : (
+          <p>Please sign in to see your following page!</p>
+      )}
+  </div>
     );
 }
 
