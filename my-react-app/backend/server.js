@@ -6,7 +6,7 @@ import { auth, db } from '../src/firebase.js';
 
 // const admin = require('firebase-admin');
 
-import { addDoc, collection, getDocs, query, where, doc, collectionGroup, orderBy, limit } from "firebase/firestore"; 
+import { addDoc, collection, getDocs, query, where, doc, collectionGroup, orderBy, limit, getDoc } from "firebase/firestore"; 
 import { firestore } from '../src/firebase.js'; // Correct way to import 
 
 const app = express();
@@ -34,7 +34,7 @@ async function getLatestPostsFromClubs(db) {
 
       // this query logic doesn't work?? -- it returns nothing
       // const q = query(posts_subcollection, orderBy('createdAt', 'desc'), limit(1));
-      //const qSnapshot = await getDocs(q);
+      // const qSnapshot = await getDocs(q);
       
       if(!qSnapshot.empty){
         // console.log("found a post");
@@ -44,6 +44,53 @@ async function getLatestPostsFromClubs(db) {
     }
     // console.log(postList);
     return postList;
+}
+
+async function getPostsForFollowedClubs(db, email, userPath){
+  let clubList = [];
+  // getting the list of followed clubs
+  const clubCollection = collection(db, `Users/${userPath}/followedClubs`);
+  const clubSnapshot = await getDocs(clubCollection);
+  if(!clubSnapshot.empty){
+    clubSnapshot.forEach((clubDoc) => {
+      const clubId = clubDoc.id;
+      const clubData = {
+        clubId // Add club ID to the data
+        // Add other relevant club data here (if needed)
+      };
+      clubList.push(clubData);
+    });
+
+    console.log("user follows " + clubList.length + " clubs");
+  }
+  let postList = []; // declare an empty posts list
+  console.log("Checking each club now:");
+  for (const clubData of clubList) {
+    const clubName = clubData.clubId; // Extract and assign to the variable
+    console.log("Checking club: " + clubName);
+    // clubId is a name, so we have to query
+    const outerClubCollection = collection(db, 'clubs');
+    const q = query(outerClubCollection, where('club_url', '==', clubName));
+    const qSnapshot = await getDocs(q);
+    if(qSnapshot.empty){
+      console.log("Somehow nothing came up.");
+    }
+    const clubDoc = qSnapshot.docs[0];
+    if(clubDoc){
+      console.log("associated clubdoc exists");
+    }
+    const clubId = clubDoc.id;
+
+    const posts_subcollection = query(collection(db, `clubs/${clubId}/posts`));
+    const posts_snapshot = await getDocs(posts_subcollection);
+    if(!posts_snapshot.empty){ // if there are posts to load
+      console.log("getPostsForFollowedClubs: " + clubName + " has posts to be rendered");
+      // push to the list the first one they have
+      const post = {id: posts_snapshot.docs[0].id, ...posts_snapshot.docs[0].data() };
+      postList.push(post);
+    }
+  }
+  return postList;
 }
 
 async function getAllClubPosts(db, clubName){
@@ -102,6 +149,18 @@ app.post('/get_posts', async (req, res) => {
       // get the clubs since each one has a posts subcollection
       from_DB_Posts = await getLatestPostsFromClubs(db);
       // console.log("From outside the function: " + from_DB_Posts);
+    }
+    else if(pageType === 'following'){
+      const {email} = req.body;
+      const {userPath} = req.body;
+      console.log("Trying to get following page for " + email);
+      console.log("Path to user: " + userPath);
+      from_DB_Posts = await getPostsForFollowedClubs(db, email, userPath);
+      if(from_DB_Posts.length === 0){
+        let err_msg = "No posts to render, follow a club!";
+        res.status(206).json({success: false, message: err_msg });
+        return;
+      }
     }
     else if(pageType === 'clubPage'){
       const {clubName} = req.body;
