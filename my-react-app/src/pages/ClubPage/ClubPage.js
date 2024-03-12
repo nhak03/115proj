@@ -23,11 +23,12 @@ function ClubPage() {
   let { clubName } = useParams();
   const authUser = useAuthState();
   const [errorMessage, setErrorMessage] = useState('');
-  const clubDoc = getClubDoc(clubName)
+  const [statusMessage, setStatusMessage] = useState('');
+  const clubDoc = getClubDoc(clubName);
   const [description, setClubDescription] = useState('No Club Description');
   const [contactInfo, setClubContactInfo] = useState('No Club Contact Information');
   const [pageOwnerStatus, setPageOwnerStatus] = useState(false);
-  const [clubDocID, setClubDocID] = useState('None')
+  const [clubDocID, setClubDocID] = useState('None');
 
   const [showModal, setShowModal] = useState(false);
   const handleOpenModal = () => setShowModal(true);
@@ -56,18 +57,16 @@ function ClubPage() {
           setErrorMessage(msg);
           return;
         }
-        if(backend_response.status === 206){
-          console.log("206 case");
-          let msg = "Http 206: " + backendStatus.message;
-          setErrorMessage(msg);
-          return;
-        }
         if(backendStatus.success){
-          // console.log("Server responded with a success!");
-          // success respond means that we have the array
-          setPosts(backendStatus.posts);
-          setClubTitle(backendStatus.clubTitle);
-          console.log("displaying posts...");
+          // confirm club ownership
+          console.log("is the user the club owner?");
+          if (authUser && authUser.Club_Doc_ID === clubDocID) {
+            console.log("status changes")
+            setPageOwnerStatus(true)
+          }
+          else {
+            setPageOwnerStatus(false)
+          }
 
           // collect description and contact info for display
           // console.log("from jacks function" + clubDoc.then(function(result)))
@@ -83,14 +82,12 @@ function ClubPage() {
             }
           })
 
-          // confirm club ownership
-          if (authUser && authUser.Club_Doc_ID === clubDocID) {
-            console.log("status changes")
-            setPageOwnerStatus(true)
-          }
-          else {
-            setPageOwnerStatus(false)
-          }
+          
+            setPosts(backendStatus.posts);
+            setClubTitle(backendStatus.clubTitle);
+            console.log("displaying posts...");
+          
+          
         }
       } catch (error) {
         console.error('Error fetching posts: ', error);
@@ -149,18 +146,19 @@ function ClubPage() {
               <SignUp />
             </Modal>
           )}
+          <div>
+              {pageOwnerStatus && <CreatePost/>}
+          </div>
         </header>
         <main>
+            
           <div class='club-info'>
             <div><ClubEditableTextBox initialText={description} formTitle={'Description'} Club_Doc_ID={clubDocID} pageOwnerStatus={pageOwnerStatus}/></div>
             <div><ClubEditableTextBox initialText={contactInfo} formTitle={'Contact Information'} Club_Doc_ID={clubDocID} pageOwnerStatus={pageOwnerStatus}/></div>
           </div>
           <div class='post-stream'>
-            <div>
-              {pageOwnerStatus && <CreatePost/>}
-            </div>
-
-            <PostStream posts={posts} /> 
+            {statusMessage && <h2>{statusMessage}</h2>}
+            {<PostStream posts={posts} />}
           </div>
         </main>
       </body>

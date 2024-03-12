@@ -9,6 +9,13 @@ import { auth, db } from '../src/firebase.js';
 import { addDoc, collection, getDocs, query, where, doc, collectionGroup, orderBy, limit, getDoc } from "firebase/firestore"; 
 import { firestore } from '../src/firebase.js'; // Correct way to import 
 
+class resultClass {
+  constructor(postList, clubTitle) {
+      this.postList = postList;
+      this.clubTitle = clubTitle;
+  }
+}
+
 const app = express();
 
 async function getLatestPostsFromClubs(db) {
@@ -126,13 +133,9 @@ async function getAllClubPosts(db, clubName){
       success_state = true;
     }
   }
+  let result = new resultClass(postList, clubName);
   // if it is empty, then return an empty postList and clubTitle
-  return {
-    postList: postList,
-    clubTitle: clubTitle,
-    success: success_state,
-    clubFound: clubFound
-  }
+  return result;
 }
 
 
