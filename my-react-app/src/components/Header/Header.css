@@ -13,6 +13,7 @@
     align-items: center;
     padding: 10px;
     box-sizing: border-box;
+    position: relative;
   }
   
   .logo-container {
@@ -34,31 +35,24 @@
   }
   
   .auth-controls {
-    /* Adjust as necessary for your sign in/sign out buttons */
-  }
-  
-  
-  h1 {
-    font-size: 3em; /* Make it large */
-    color: #ffd100; /* UCSC Yellow */
-    margin: 0; /* Reset margin */
-  }
-  
-  .auth-controls {
-    /* Adjust as necessary for your sign in/sign out buttons */
+
   }
   
   
   .profile-button-container {
-    position: fixed;
-    top: 20px;
+    position: absolute;
+    top: 10px;
     right: 20px;
+    display: flex;
+    flex-direction: column;
     z-index: 999;
+    align-items: center;
   }
   .profile-icon {
     font-size: 24px;
     color: #ffd100; /* UCSC Yellow */
     cursor: pointer;
+    margin-bottom: 10px;
   }
   nav ul {
     list-style: none;
