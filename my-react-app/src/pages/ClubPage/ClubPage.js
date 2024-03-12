@@ -82,7 +82,9 @@ function ClubPage() {
             }
           })
 
-          
+            if(backendStatus.posts.length === 0){
+              setStatusMessage("No posts yet!");
+            }
             setPosts(backendStatus.posts);
             setClubTitle(backendStatus.clubTitle);
             console.log("displaying posts...");

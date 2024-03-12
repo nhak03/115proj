@@ -19,7 +19,7 @@ function Discover() {
           <Header />
           <div>
             {authUser && !authUser.clubStatus && <CreateClubButton />}
-            {authUser && authUser.clubStatus && <p>If you see this, you are a club owner. {authUser.clubName}</p>}
+            {authUser && authUser.clubStatus && <h2> You are the Club Owner of {authUser.clubName}</h2>}
           </div>
           <div>
             <SearchBar />
