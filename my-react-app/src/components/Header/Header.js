@@ -22,6 +22,7 @@ const Header = () => {
   const handleCloseModal = () => setShowModal(false);
   return (
     <header className="header">
+
       <div className="profile-button-container">
         <Link to="/profile">
           <FontAwesomeIcon icon={faUser} className="profile-icon" />
@@ -48,10 +49,11 @@ const Header = () => {
           <li><a href="/">What's New</a></li>
           <li><a href="/following">Following</a></li>
           <li><a href="/discover">Discover</a></li>
-          {authUser && authUser.clubStatus && <CreatePost />}
         </ul>
       </nav>
-
+      <div className="create-post" >
+        {authUser && authUser.clubStatus && <CreatePost />}
+      </div>
       {showModal && (
         <Modal onClose={handleCloseModal}>
           <SignIn />
