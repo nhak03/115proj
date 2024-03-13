@@ -1,10 +1,10 @@
 Winter 2024 CSE115a Project SlimeLine
 
 Members:
-Bora Dursun
-Mohan Duvvuri
-Nicolas Hak
-Ronith Kalidindi
+Bora Dursun,
+Mohan Duvvuri,
+Nicolas Hak,
+Ronith Kalidindi,
 Jack Kelly
 
 NOTE: if you did a git pull to get all the files, then just do
