@@ -1,0 +1,9 @@
+SlimeLine Known Bugs List:
+
+Log In/Sign Up:
+1. no confirmation for logging in/creating account
+2. DO NOT autofill saved info. must type manually
+3. text sometimes turning yellow when typing? potentially also related to autofill
+
+Club Creation:
+1. When creating a club, the app has to restart in order for the app to recognize that the club owner has valid access to their page (allowing them to use the edit buttons for contact and description)
